@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76c4ed02-8701-4c78-a33f-7d1412fd3a4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/mediatheque_app/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mediatheque_app/templates/homePage.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/members_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CEF_devoirs_mediatheque/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CEF_devoirs_mediatheque/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediatheque_app/asgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CEF_devoirs_mediatheque/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediatheque_app/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CEF_devoirs_mediatheque/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/members_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CEF_devoirs_mediatheque/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediatheque_app/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +40,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Fabien Acer\Etude\Informatique\CEF\zone_de_travail\devoirs_appliques\11_poo_python\mediatheque\CEF_devoirs_mediatheque\librarian_app" />
       <recent name="C:\Fabien Acer\Etude\Informatique\CEF\zone_de_travail\devoirs_appliques\11_poo_python\mediatheque\CEF_devoirs_mediatheque\CEF_devoirs_mediatheque\members_app" />
     </key>
   </component>
