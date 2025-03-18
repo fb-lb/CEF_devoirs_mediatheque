@@ -1,5 +1,5 @@
 """
-URL configuration for CEF_devoirs_mediatheque project.
+URL configuration for mediatheque_app project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -14,9 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
+from members_app import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('media/', views.mediapage, name='media'),
 ]
