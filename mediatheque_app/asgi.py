@@ -1,5 +1,5 @@
 """
-ASGI config for CEF_devoirs_mediatheque project.
+ASGI config for mediatheque_app project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CEF_devoirs_mediatheque.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mediatheque_app.settings')
 
 application = get_asgi_application()
