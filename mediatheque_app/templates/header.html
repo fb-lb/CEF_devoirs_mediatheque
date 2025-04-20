@@ -6,12 +6,20 @@
         <ul>
             <li><a href="/">Accueil</a></li>
             <li>
-                <a href="{% url 'media' %}">Nos médias</a>
+                <p>Nos médias</p>
                 <ul>
-                    <li><a href="#">Livres</a></li>
+                    <li><a href="{% url 'books_list' %}">Livres</a></li>
                     <li><a href="#">CD</a></li>
                     <li><a href="#">DVD</a></li>
                     <li><a href="#">Jeux de plateaux</a></li>
+                </ul>
+            </li>
+            <li>
+                <p>Bibliothécaires</p>
+                <ul>
+                    <li><a href="{% url 'media_management' %}">Gestion des médias</a></li>
+                    <li><a href="#">Gestion des membres</a></li>
+                    <li><a href="{% url 'borrowings' %}">Emprunts</a></li>
                 </ul>
             </li>
         </ul>

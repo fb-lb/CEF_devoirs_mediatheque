@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block books_list %}
+<main>
+    <h1>Liste des livres de la médiathèque</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Disponible</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.pk }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author }}</td>
+                <td>{% if book.is_available %} Oui {% else %} Non {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}

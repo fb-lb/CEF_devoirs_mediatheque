@@ -18,5 +18,5 @@ from django.urls import path
 from members_app import views
 
 urlpatterns = [
-    path('media/', views.mediapage, name='media'),
+    path('nos-livres/', views.books_list, name='books_list'),
 ]
