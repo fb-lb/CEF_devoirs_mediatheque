@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block borrowings %}
+<main>
+    <h1>Emprunts</h1>
+    <h2>Nouvel emprunt</h2>
+    <form action="#" method="post" novalidate>
+        {{ borrowing_media_form }}
+    </form>
+    <h2>Retour d'emprunt</h2>
+    <h2>Liste des emprunts</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Type de média</th>
+                <th>Identifiant</th>
+                <th>Nom</th>
+                <th>Auteur / Réalisateur / Artiste / Créateur</th>
+                <th>Date d'emprunt</th>
+                <th>Emprunteur</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books_borrowed %}
+            <tr>
+                <td>{{ book.media_type }}</td>
+                <td>{{ book.pk }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.borrowing_date }}</td>
+                <td>Nom de l'emprunteur</td>
+            </tr>
+        {% empty %}
+        <tr>
+            <td>Aucun emprunt pour le moment</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}

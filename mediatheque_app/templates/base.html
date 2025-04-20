@@ -12,7 +12,10 @@
 <body>
     {% include 'header.html' %}
 
-    {% block content %} {% endblock %}
-    {% block media %} {% endblock %}
+    {% block home_page %} {% endblock %}
+    {% block books_list %} {% endblock %}
+    {% block media_management %} {% endblock %}
+    {% block borrowings %} {% endblock %}
+    <script src="{% static 'js/book_detail.js' %}"></script>
 </body>
 </html>

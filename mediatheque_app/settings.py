@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mediatheque_app',
     'members_app',
+    'librarians_app',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block media_management %}
+<main>
+    <h1>Gestion des médias de la base de données</h1>
+    <h2>Ajouter un livre à la base de données</h2>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ create_book }}
+        <input type="submit" name="submit_create_book" value="Enregistrer">
+    </form>
+    <h2>Supprimer un livre de la base de données</h2>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ delete_book }}
+        <p>Titre et auteur du livre à supprimer :</p>
+        <div id="book-info-delete"></div>
+        <input type="submit" name="submit_delete_book" value="Supprimer">
+    </form>
+    <h2>Modifier un livre de la base de données</h2>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ update_book }}
+        <div id="book-error-update"></div>
+        <input type="submit" name="submit_update_book" value="Modifier">
+    </form>
+</main>
+{% endblock %}
