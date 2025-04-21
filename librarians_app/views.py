@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from librarians_app.models import Book, Member
 from librarians_app.forms import CreateBook, DeleteBook, UpdateBook
-from librarians_app.forms import CreateMember
+from librarians_app.forms import CreateMember, UpdateMember
 from librarians_app.forms import BorrowingMediaForm
 
 '''
@@ -52,8 +52,8 @@ def mediaManagement(request):
 
 def getBookDetails(request):
     book_id = request.GET.get('book_id')
-    if not book_id:
-        return JsonResponse({'error': 'ID du livre manquant.'})
+    #if not book_id:
+        #return JsonResponse({'error': 'ID du livre manquant.'})
     try:
         book = Book.objects.get(pk=book_id)
         data = {
@@ -61,14 +61,14 @@ def getBookDetails(request):
             'author': book.author
         }
     except Book.DoesNotExist:
-        data = {'error': 'Livre non trouvé'}
+        data = {'error': 'Cet identifiant ne correspond à aucun livre'}
     return JsonResponse(data)
 
 '''
 View relative to membersManagement.html
 '''
 
-def createMember(request, members):
+def createMember(request):
     create_member = CreateMember(request.POST)
     if create_member.is_valid():
         member = Member()
@@ -77,16 +77,43 @@ def createMember(request, members):
         member.save()
         return redirect('members_management')
 
+def updateMember(request):
+    update_member = UpdateMember(request.POST)
+    if update_member.is_valid():
+        id = update_member.cleaned_data['id']
+        member = Member.objects.get(pk=id)
+        member.first_name = update_member.cleaned_data['first_name']
+        member.last_name = update_member.cleaned_data['last_name']
+        member.save()
+        return redirect('members_management')
+
 def membersManagement(request):
     members = Member.objects.all()
     if request.method == 'POST':
         if 'submit_create_member' in request.POST:
-            return createMember(request, members)
+            return createMember(request)
+        if 'submit_update_member' in request.POST:
+            return updateMember(request)
     else:
         return render(request, 'membersManagement.html', {
             'members': members,
-            'create_member': CreateMember()
+            'create_member': CreateMember(),
+            'update_member': UpdateMember()
         })
+
+def getMemberDetails(request):
+    member_id = request.GET.get("member_id")
+    #if not (member_id):
+        #return JsonResponse({'error': 'Membre introuvable'})
+    try:
+        member = Member.objects.get(pk=member_id)
+        data = {
+            'last_name': member.last_name,
+            'first_name': member.first_name
+        };
+    except Member.DoesNotExist:
+        data = {'error': 'Cet identifiant ne correspond à aucun membre'}
+    return JsonResponse(data)
 
 '''
 View relative to borrowings.html

@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(data => {
                     if (data.error) {
                         bookInfo.innerHTML = `<p style="color:red;">${data.error}</p>`;
-                        bookName.value = '';
-                        bookAuthor.value = '';
+                        bookName.value = "";
+                        bookAuthor.value = "";
                     } else {
                         bookInfo.innerHTML = "";
                         bookName.value = data.title;
@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         } else {
             bookInfo.innerHTML = "";
-            bookName.value = '';
-            bookAuthor.value = '';
+            bookName.value = "";
+            bookAuthor.value = "";
         }
     });
 });

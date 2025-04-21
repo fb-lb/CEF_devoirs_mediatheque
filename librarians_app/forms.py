@@ -46,6 +46,23 @@ class CreateMember(forms.Form):
     last_name = forms.CharField(required=True, label='Nom')
 
 
+class UpdateMember(forms.Form):
+    id = forms.IntegerField(
+        required=True,
+        label='Identifiant',
+        widget=forms.TextInput(attrs={'id': 'member-id-update'})
+    )
+    last_name = forms.CharField(
+        required=True,
+        label='Nom',
+        widget=forms.TextInput(attrs={'id': 'member-last-name-update'})
+    )
+    first_name = forms.CharField(
+        required=True,
+        label='Prénom',
+        widget=forms.TextInput(attrs={'id': 'member-first-name-update'})
+    )
+
 '''
 Borrowings form
 '''
