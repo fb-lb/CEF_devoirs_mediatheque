@@ -42,9 +42,16 @@ Members management forms
 
 
 class CreateMember(forms.Form):
-    first_name = forms.CharField(required=True, label='Prénom')
     last_name = forms.CharField(required=True, label='Nom')
+    first_name = forms.CharField(required=True, label='Prénom')
 
+
+class DeleteMember(forms.Form):
+    id = forms.IntegerField(
+        required=True,
+        label='Identifiant',
+        widget=forms.TextInput(attrs={'id': 'member-id-delete'})
+    )
 
 class UpdateMember(forms.Form):
     id = forms.IntegerField(

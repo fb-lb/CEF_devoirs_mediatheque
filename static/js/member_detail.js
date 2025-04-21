@@ -28,3 +28,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
 })
+
+// Add event listener on id field in DeleteMember form
+document.addEventListener("DOMContentLoaded", function () {
+    const memberInput = document.getElementById("member-id-delete");
+    const memberInfo = document.getElementById("member-info-delete");
+
+    memberInput.addEventListener("input", function () {
+        const memberId = this.value;
+
+        if (memberId) {
+            fetch(`/bibliothecaire/get-member-details/?member_id=${memberId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        memberInfo.innerHTML = `<p style="color:red">${data.error}</p>`;
+                    } else {
+                        memberInfo.innerHTML = `<p>${data.last_name} ${data.first_name}</p>`;
+                    }
+                });
+        } else {
+            memberInfo.innerHTML = "";
+        }
+    })
+})

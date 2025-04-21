@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from librarians_app.models import Book, Member
 from librarians_app.forms import CreateBook, DeleteBook, UpdateBook
-from librarians_app.forms import CreateMember, UpdateMember
+from librarians_app.forms import CreateMember, UpdateMember, DeleteMember
 from librarians_app.forms import BorrowingMediaForm
 
 '''
@@ -87,18 +87,29 @@ def updateMember(request):
         member.save()
         return redirect('members_management')
 
+def deleteMember(request):
+    delete_member = DeleteMember(request.POST)
+    if delete_member.is_valid():
+        id = delete_member.cleaned_data['id']
+        member = Member.objects.get(pk=id)
+        member.delete()
+        return redirect('members_management')
+
 def membersManagement(request):
     members = Member.objects.all()
     if request.method == 'POST':
         if 'submit_create_member' in request.POST:
             return createMember(request)
-        if 'submit_update_member' in request.POST:
+        elif 'submit_update_member' in request.POST:
             return updateMember(request)
+        elif 'submit_delete_member' in request.POST:
+            return deleteMember(request)
     else:
         return render(request, 'membersManagement.html', {
             'members': members,
             'create_member': CreateMember(),
-            'update_member': UpdateMember()
+            'update_member': UpdateMember(),
+            'delete_member': DeleteMember()
         })
 
 def getMemberDetails(request):

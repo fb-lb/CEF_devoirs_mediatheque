@@ -23,6 +23,12 @@
   </section>
   <section>
     <h2>Supprimer un membre</h2>
+      <form action="" method="post" novalidate>
+          {% csrf_token %}
+          {{ delete_member }}
+          <div id="member-info-delete"></div>
+          <input type="submit" name="submit_delete_member" value="Supprimer">
+      </form>
   </section>
   <section>
     <h2>Liste des membres</h2>
