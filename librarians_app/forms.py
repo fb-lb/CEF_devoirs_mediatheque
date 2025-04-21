@@ -1,5 +1,9 @@
 from django import forms
 
+'''
+Books management forms
+'''
+
 
 class CreateBook(forms.Form):
     name = forms.CharField(required=True, label='Nom')
@@ -31,6 +35,44 @@ class UpdateBook(forms.Form):
         widget=forms.TextInput(attrs={'id': 'book-author-update'})
     )
 
+
+'''
+Members management forms
+'''
+
+
+class CreateMember(forms.Form):
+    last_name = forms.CharField(required=True, label='Nom')
+    first_name = forms.CharField(required=True, label='Prénom')
+
+
+class DeleteMember(forms.Form):
+    id = forms.IntegerField(
+        required=True,
+        label='Identifiant',
+        widget=forms.TextInput(attrs={'id': 'member-id-delete'})
+    )
+
+class UpdateMember(forms.Form):
+    id = forms.IntegerField(
+        required=True,
+        label='Identifiant',
+        widget=forms.TextInput(attrs={'id': 'member-id-update'})
+    )
+    last_name = forms.CharField(
+        required=True,
+        label='Nom',
+        widget=forms.TextInput(attrs={'id': 'member-last-name-update'})
+    )
+    first_name = forms.CharField(
+        required=True,
+        label='Prénom',
+        widget=forms.TextInput(attrs={'id': 'member-first-name-update'})
+    )
+
+'''
+Borrowings form
+'''
 
 CHOICES = [
     ('option2', 'Livre'),

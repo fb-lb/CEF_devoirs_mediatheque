@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block members_management %}
+<main>
+  <h1>Gestion des membres de la médiathèque</h1>
+  <section>
+    <h2>Créer un membre</h2>
+    <form action="" method="post" novalidate>
+      {% csrf_token %}
+      {{ create_member }}
+      <input type="submit" name="submit_create_member" value="Enregistrer">
+    </form>
+  </section>
+  <section>
+    <h2>Modifier un membre</h2>
+      <form action="" method="post" novalidate>
+          {% csrf_token %}
+          {{ update_member }}
+          <div id="member-error-update"></div>
+          <input type="submit" name="submit_update_member" value="Modifier">
+      </form>
+  </section>
+  <section>
+    <h2>Supprimer un membre</h2>
+      <form action="" method="post" novalidate>
+          {% csrf_token %}
+          {{ delete_member }}
+          <div id="member-info-delete"></div>
+          <input type="submit" name="submit_delete_member" value="Supprimer">
+      </form>
+  </section>
+  <section>
+    <h2>Liste des membres</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Nombre d'emprunt en cours</th>
+                <th>Interdit d'emprunt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.pk }}</td>
+                <td>{{ member.last_name }}</td>
+                <td>{{ member.first_name }}</td>
+                <td>{{ member.nb_current_borrowings }}</td>
+                <td>{% if member.is_blocked %} Oui {% else %} Non {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </section>
+</main>
+{% endblock %}
+
+{% block script_member_detail %}
+<script src="{% static 'js/member_detail.js' %}" defer></script>
+{% endblock %}

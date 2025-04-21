@@ -1,7 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from librarians_app.models import Book
-from librarians_app.forms import CreateBook, DeleteBook, UpdateBook, BorrowingMediaForm
+from librarians_app.models import Book, Member
+from librarians_app.forms import CreateBook, DeleteBook, UpdateBook
+from librarians_app.forms import CreateMember, UpdateMember, DeleteMember
+from librarians_app.forms import BorrowingMediaForm
+
+'''
+View relative to mediaManagement.html
+'''
 
 def createBook(request):
     create_book = CreateBook(request.POST)
@@ -10,22 +16,14 @@ def createBook(request):
         book.name = create_book.cleaned_data['name']
         book.author = create_book.cleaned_data['author']
         book.save()
-        return render(request, 'mediaManagement.html', {
-            'create_book': CreateBook(),
-            'delete_book': DeleteBook(),
-            'update_book': UpdateBook()
-        })
+        return redirect('media_management')
 
 def deleteBook(request):
     delete_book = DeleteBook(request.POST)
     if delete_book.is_valid():
         book = Book.objects.get(pk=delete_book.cleaned_data['id'])
         book.delete()
-        return render(request, 'mediaManagement.html', {
-            'create_book': CreateBook(),
-            'delete_book': DeleteBook(),
-            'update_book': UpdateBook()
-        })
+        return redirect('media_management')
 
 def updateBook(request):
     update_book = UpdateBook(request.POST)
@@ -35,11 +33,7 @@ def updateBook(request):
         book.name = update_book.cleaned_data['name']
         book.author = update_book.cleaned_data['author']
         book.save()
-        return render(request, 'mediaManagement.html', {
-            'create_book': CreateBook(),
-            'delete_book': DeleteBook(),
-            'update_book': UpdateBook()
-        })
+        return redirect('media_management')
 
 def mediaManagement(request):
     if request.method == 'POST':
@@ -58,8 +52,8 @@ def mediaManagement(request):
 
 def getBookDetails(request):
     book_id = request.GET.get('book_id')
-    if not book_id:
-        return JsonResponse({'error': 'ID du livre manquant.'})
+    #if not book_id:
+        #return JsonResponse({'error': 'ID du livre manquant.'})
     try:
         book = Book.objects.get(pk=book_id)
         data = {
@@ -67,8 +61,74 @@ def getBookDetails(request):
             'author': book.author
         }
     except Book.DoesNotExist:
-        data = {'error': 'Livre non trouvé'}
+        data = {'error': 'Cet identifiant ne correspond à aucun livre'}
     return JsonResponse(data)
+
+'''
+View relative to membersManagement.html
+'''
+
+def createMember(request):
+    create_member = CreateMember(request.POST)
+    if create_member.is_valid():
+        member = Member()
+        member.first_name = create_member.cleaned_data['first_name']
+        member.last_name = create_member.cleaned_data['last_name']
+        member.save()
+        return redirect('members_management')
+
+def updateMember(request):
+    update_member = UpdateMember(request.POST)
+    if update_member.is_valid():
+        id = update_member.cleaned_data['id']
+        member = Member.objects.get(pk=id)
+        member.first_name = update_member.cleaned_data['first_name']
+        member.last_name = update_member.cleaned_data['last_name']
+        member.save()
+        return redirect('members_management')
+
+def deleteMember(request):
+    delete_member = DeleteMember(request.POST)
+    if delete_member.is_valid():
+        id = delete_member.cleaned_data['id']
+        member = Member.objects.get(pk=id)
+        member.delete()
+        return redirect('members_management')
+
+def membersManagement(request):
+    members = Member.objects.all()
+    if request.method == 'POST':
+        if 'submit_create_member' in request.POST:
+            return createMember(request)
+        elif 'submit_update_member' in request.POST:
+            return updateMember(request)
+        elif 'submit_delete_member' in request.POST:
+            return deleteMember(request)
+    else:
+        return render(request, 'membersManagement.html', {
+            'members': members,
+            'create_member': CreateMember(),
+            'update_member': UpdateMember(),
+            'delete_member': DeleteMember()
+        })
+
+def getMemberDetails(request):
+    member_id = request.GET.get("member_id")
+    #if not (member_id):
+        #return JsonResponse({'error': 'Membre introuvable'})
+    try:
+        member = Member.objects.get(pk=member_id)
+        data = {
+            'last_name': member.last_name,
+            'first_name': member.first_name
+        };
+    except Member.DoesNotExist:
+        data = {'error': 'Cet identifiant ne correspond à aucun membre'}
+    return JsonResponse(data)
+
+'''
+View relative to borrowings.html
+'''
 
 def borrowings(request):
     books_borrowed = Book.objects.filter(is_available=False)
