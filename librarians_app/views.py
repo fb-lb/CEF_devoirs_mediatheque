@@ -70,6 +70,9 @@ def getBookDetails(request):
         data = {'error': 'Livre non trouvé'}
     return JsonResponse(data)
 
+def membersManagement(request):
+    return render(request, 'membersManagement.html')
+
 def borrowings(request):
     books_borrowed = Book.objects.filter(is_available=False)
     borrowing_media_form = BorrowingMediaForm
