@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         bookName.value = '';
                         bookAuthor.value = '';
                     } else {
+                        bookInfo.innerHTML = "";
                         bookName.value = data.title;
                         bookAuthor.value = data.author;
                     }

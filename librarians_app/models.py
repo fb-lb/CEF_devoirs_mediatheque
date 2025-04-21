@@ -19,4 +19,4 @@ class Member(models.Model):
             MinValueValidator(0)
         ]
     )
-    blocked = models.fields.BooleanField(default=False)
+    is_blocked = models.fields.BooleanField(default=False)
