@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.utils import timezone
+from datetime import timedelta
 from librarians_app.models import Book, Member
 from librarians_app.forms import CreateBook, DeleteBook, UpdateBook
 from librarians_app.forms import CreateMember, UpdateMember, DeleteMember
@@ -121,7 +123,7 @@ def getMemberDetails(request):
         data = {
             'last_name': member.last_name,
             'first_name': member.first_name
-        };
+        }
     except Member.DoesNotExist:
         data = {'error': 'Cet identifiant ne correspond à aucun membre'}
     return JsonResponse(data)
@@ -130,7 +132,50 @@ def getMemberDetails(request):
 View relative to borrowings.html
 '''
 
+def returnDate(borrowing_date):
+    return_day = borrowing_date + timedelta(days=7)
+    return_date_time = return_day.replace(hour=23, minute=59)
+    return return_date_time
+
+def newBorrowing(request):
+    new_borrowing = BorrowingMediaForm(request.POST)
+    if new_borrowing.is_valid():
+        media_type = new_borrowing.cleaned_data['media_type']
+        media_id = new_borrowing.cleaned_data['media_id']
+        member_id = new_borrowing.cleaned_data['member_id']
+        member = Member.objects.get(pk=member_id)
+        if media_type == 'book' :
+            book = Book.objects.get(pk=media_id)
+            book.borrowing_date = timezone.now()
+            book.return_date = returnDate(timezone.now())
+            book.is_available = False
+            book.borrower = member
+            member.nb_current_borrowings += 1
+            member.save()
+            book.save()
+    return redirect('borrowings')
+
 def borrowings(request):
+    borrowing_media_form = BorrowingMediaForm()
     books_borrowed = Book.objects.filter(is_available=False)
-    borrowing_media_form = BorrowingMediaForm
+    if request.method == 'POST':
+        if 'submit_borrowing' in request.POST:
+            return newBorrowing(request)
     return render(request, 'borrowings.html', {'books_borrowed':books_borrowed, 'borrowing_media_form':borrowing_media_form})
+
+def getMediaDetails(request):
+    media_id = request.GET.get('media_id')
+    media_type = request.GET.get('media_type')
+    if media_type == "book":
+        try:
+            book = Book.objects.get(pk=media_id)
+            data = {
+                'title': book.name,
+                'author': book.author
+            }
+        except Book.DoesNotExist:
+            data = {'error': 'Cet identifiant ne correspond à aucun livre'}
+        return JsonResponse(data)
+    else:
+        data = {'error': "Ce média n'est pas reconnu"}
+        return JsonResponse(data)

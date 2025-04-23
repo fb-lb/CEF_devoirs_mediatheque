@@ -75,11 +75,27 @@ Borrowings form
 '''
 
 CHOICES = [
-    ('option2', 'Livre'),
-    ('option3', 'CD')
+    ('book', 'Livre'),
+    ('cd', 'CD')
 ]
 
 
+
 class BorrowingMediaForm(forms.Form):
-    media_type = forms.ChoiceField(choices=CHOICES, initial='option1', label='Type du média')
-    id = forms.IntegerField(label='Identifiant', initial=0)
+    media_type = forms.ChoiceField(
+        choices=CHOICES,
+        initial='Livre',
+        label='Type du média',
+        widget=forms.Select(attrs={'id': 'media-type-borrow'})
+    )
+    media_id = forms.IntegerField(
+        label='Identifiant du média',
+        initial=0,
+        widget=forms.TextInput(attrs={'id': 'media-id-borrow'})
+    )
+    member_id = forms.IntegerField(
+        label='Identifiant du membre',
+        initial=0,
+        widget=forms.TextInput(attrs={'id': 'member-id-borrow'})
+    )
+

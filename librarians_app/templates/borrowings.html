@@ -1,41 +1,63 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block borrowings %}
 <main>
     <h1>Emprunts</h1>
-    <h2>Nouvel emprunt</h2>
-    <form action="#" method="post" novalidate>
-        {{ borrowing_media_form }}
-    </form>
-    <h2>Retour d'emprunt</h2>
-    <h2>Liste des emprunts</h2>
-    <table>
-        <thead>
+    <section>
+        <h2>Nouvel emprunt</h2>
+        <form action="#" method="post" novalidate>
+            {% csrf_token %}
+            {{ borrowing_media_form.media_type.label_tag }}
+            {{ borrowing_media_form.media_type }}
+            {{ borrowing_media_form.media_id.label_tag }}
+            {{ borrowing_media_form.media_id }}
+            <p>Détails du média :</p>
+            <div id="media-info-borrow"></div>
+            {{ borrowing_media_form.member_id.label_tag }}
+            {{ borrowing_media_form.member_id }}
+            <p>Nom et prénom de l'emprunteur :</p>
+            <div id="member-info-borrow"></div>
+            <input type="submit" name="submit_borrowing" value="Enregistrer emprunt">
+        </form>
+    </section>
+    <section>
+        <h2>Retour d'emprunt</h2>
+    </section>
+    <section>
+        <h2>Liste des emprunts</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type de média</th>
+                    <th>Identifiant</th>
+                    <th>Nom</th>
+                    <th>Auteur / Réalisateur / Artiste / Créateur</th>
+                    <th>Date d'emprunt</th>
+                    <th>Emprunteur</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for book in books_borrowed %}
+                <tr>
+                    <td>{{ book.media_type }}</td>
+                    <td>{{ book.pk }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.borrowing_date }}</td>
+                    <td>Nom de l'emprunteur</td>
+                </tr>
+            {% empty %}
             <tr>
-                <th>Type de média</th>
-                <th>Identifiant</th>
-                <th>Nom</th>
-                <th>Auteur / Réalisateur / Artiste / Créateur</th>
-                <th>Date d'emprunt</th>
-                <th>Emprunteur</th>
+                <td>Aucun emprunt pour le moment</td>
             </tr>
-        </thead>
-        <tbody>
-        {% for book in books_borrowed %}
-            <tr>
-                <td>{{ book.media_type }}</td>
-                <td>{{ book.pk }}</td>
-                <td>{{ book.name }}</td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.borrowing_date }}</td>
-                <td>Nom de l'emprunteur</td>
-            </tr>
-        {% empty %}
-        <tr>
-            <td>Aucun emprunt pour le moment</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
 </main>
+{% endblock %}
+
+{% block script_borrowing_detail %}
+<script src="{% static 'js/borrowing_detail.js' %}" defer></script>
 {% endblock %}
