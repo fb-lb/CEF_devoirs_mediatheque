@@ -18,11 +18,22 @@
             {{ borrowing_media_form.member_id }}
             <p>Nom et prénom de l'emprunteur :</p>
             <div id="member-info-borrow"></div>
-            <input type="submit" name="submit_borrowing" value="Enregistrer emprunt">
+            <input type="submit" name="submit_borrowing" value="Enregistrer l'emprunt">
         </form>
     </section>
     <section>
         <h2>Retour d'emprunt</h2>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{ return_media_form.member_id.label_tag }}
+            {{ return_media_form.member_id }}
+            <div id="member-info-return"></div>
+            {{ return_media_form.media_id.label_tag }}
+            {{ return_media_form.media_id }}
+            <input type="hidden" id="media-type-return" name="media_type_return">
+            <div id="no-media-return"></div>
+            <input type="submit" name="submit_return" value="Enregistrer le retour">
+        </form>
     </section>
     <section>
         <h2>Liste des emprunts</h2>
@@ -34,6 +45,7 @@
                     <th>Nom</th>
                     <th>Auteur / Réalisateur / Artiste / Créateur</th>
                     <th>Date d'emprunt</th>
+                    <th>Date de retour d'emprunt</th>
                     <th>Emprunteur</th>
                 </tr>
             </thead>
@@ -45,7 +57,8 @@
                     <td>{{ book.name }}</td>
                     <td>{{ book.author }}</td>
                     <td>{{ book.borrowing_date }}</td>
-                    <td>Nom de l'emprunteur</td>
+                    <td>{{ book.return_date }}</td>
+                    <td>{{ book.borrower.first_name }} {{ book.borrower.last_name }}</td>
                 </tr>
             {% empty %}
             <tr>

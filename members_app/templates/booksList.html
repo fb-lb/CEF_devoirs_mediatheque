@@ -10,6 +10,7 @@
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>Disponible</th>
+                <th>Date maximale du retour</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +19,8 @@
                 <td>{{ book.pk }}</td>
                 <td>{{ book.name }}</td>
                 <td>{{ book.author }}</td>
-                <td>{% if book.is_available %} Oui {% else %} Non {% endif %}</td>
+                <td>{% if book.is_available %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if not book.is_available %}{{ book.return_date }}{% else %}{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>

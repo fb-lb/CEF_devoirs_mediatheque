@@ -1,11 +1,11 @@
 // Add event listener on id field in UpdateMember form
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const memberInput = document.getElementById("member-id-update");
     const memberError = document.getElementById("member-error-update");
     const memberLastName = document.getElementById("member-last-name-update");
     const memberFirstName = document.getElementById("member-first-name-update");
 
-    memberInput.addEventListener("input", function () {
+    memberInput.addEventListener("input", function() {
         const memberId = this.value;
 
         if (memberId) {
@@ -30,11 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
 })
 
 // Add event listener on id field in DeleteMember form
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const memberInput = document.getElementById("member-id-delete");
     const memberInfo = document.getElementById("member-info-delete");
 
-    memberInput.addEventListener("input", function () {
+    memberInput.addEventListener("input", function() {
         const memberId = this.value;
 
         if (memberId) {
