@@ -82,11 +82,20 @@ def createMember(request):
 
 def updateMember(request):
     update_member = UpdateMember(request.POST)
+    update_member.fields['is_blocked'].choices = [
+        ('true', 'Oui'),
+        ('false', 'Non')
+    ]
     if update_member.is_valid():
         id = update_member.cleaned_data['id']
         member = Member.objects.get(pk=id)
         member.first_name = update_member.cleaned_data['first_name']
         member.last_name = update_member.cleaned_data['last_name']
+        is_blocked = update_member.cleaned_data['is_blocked']
+        if is_blocked == 'true':
+            member.is_blocked = True
+        elif is_blocked == 'false':
+            member.is_blocked = False
         member.save()
         return redirect('members_management')
 
@@ -123,7 +132,8 @@ def getMemberDetails(request):
         member = Member.objects.get(pk=member_id)
         data = {
             'last_name': member.last_name,
-            'first_name': member.first_name
+            'first_name': member.first_name,
+            'is_blocked': member.is_blocked
         }
     except Member.DoesNotExist:
         data = {'error': 'Cet identifiant ne correspond à aucun membre'}

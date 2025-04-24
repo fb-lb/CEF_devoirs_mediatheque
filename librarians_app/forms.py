@@ -69,6 +69,12 @@ class UpdateMember(forms.Form):
         label='Prénom',
         widget=forms.TextInput(attrs={'id': 'member-first-name-update'})
     )
+    is_blocked = forms.ChoiceField(
+        required=True,
+        choices=[],
+        label="Le membre est interdit d'emprunt",
+        widget=forms.Select(attrs={'id': 'member-is-blocked-update'})
+    )
 
 '''
 Borrowings form
