@@ -69,17 +69,55 @@ class UpdateMember(forms.Form):
         label='Prénom',
         widget=forms.TextInput(attrs={'id': 'member-first-name-update'})
     )
+    is_blocked = forms.ChoiceField(
+        required=True,
+        choices=[],
+        label="Le membre est interdit d'emprunt",
+        widget=forms.Select(attrs={'id': 'member-is-blocked-update'})
+    )
 
 '''
 Borrowings form
 '''
 
-CHOICES = [
-    ('option2', 'Livre'),
-    ('option3', 'CD')
+CHOICES_BORROWING = [
+    ('book', 'Livre'),
+    ('cd', 'CD')
 ]
 
 
 class BorrowingMediaForm(forms.Form):
-    media_type = forms.ChoiceField(choices=CHOICES, initial='option1', label='Type du média')
-    id = forms.IntegerField(label='Identifiant', initial=0)
+    media_type = forms.ChoiceField(
+        required=True,
+        choices=CHOICES_BORROWING,
+        initial='Livre',
+        label='Type du média',
+        widget=forms.Select(attrs={'id': 'media-type-borrow'})
+    )
+    media_id = forms.IntegerField(
+        required=True,
+        label='Identifiant du média',
+        initial=0,
+        widget=forms.TextInput(attrs={'id': 'media-id-borrow'})
+    )
+    member_id = forms.IntegerField(
+        required=True,
+        label='Identifiant du membre',
+        initial=0,
+        widget=forms.TextInput(attrs={'id': 'member-id-borrow'})
+    )
+
+
+class ReturnMediaForm(forms.Form):
+    member_id = forms.IntegerField(
+        required=True,
+        label='Identifiant du membre',
+        initial=0,
+        widget=forms.TextInput(attrs={'id': 'member-id-return'})
+    )
+    media_id = forms.ChoiceField(
+        required=True,
+        choices = [],
+        label='Identifiant du média',
+        widget=forms.Select(attrs={'id': 'media-select-return'})
+    )

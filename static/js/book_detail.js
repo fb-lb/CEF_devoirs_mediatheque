@@ -1,9 +1,9 @@
 // Add event listener on id field in DeleteBook form
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const bookInput = document.getElementById("book-id-delete");
     const bookInfo = document.getElementById("book-info-delete");
 
-    bookInput.addEventListener("input", function () {
+    bookInput.addEventListener("input", function() {
         const bookId = this.value;
 
         if (bookId) {
@@ -23,13 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Add event listener on id field in UpdateBook form
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const bookInput = document.getElementById("book-id-update");
     const bookInfo = document.getElementById("book-error-update");
     const bookName = document.getElementById("book-name-update");
     const bookAuthor = document.getElementById("book-author-update");
 
-    bookInput.addEventListener("input", function () {
+    bookInput.addEventListener("input", function() {
         const bookId = this.value;
 
         if (bookId) {
