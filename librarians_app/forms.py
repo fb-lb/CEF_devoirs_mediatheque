@@ -88,17 +88,20 @@ CHOICES_BORROWING = [
 
 class BorrowingMediaForm(forms.Form):
     media_type = forms.ChoiceField(
+        required=True,
         choices=CHOICES_BORROWING,
         initial='Livre',
         label='Type du média',
         widget=forms.Select(attrs={'id': 'media-type-borrow'})
     )
     media_id = forms.IntegerField(
+        required=True,
         label='Identifiant du média',
         initial=0,
         widget=forms.TextInput(attrs={'id': 'media-id-borrow'})
     )
     member_id = forms.IntegerField(
+        required=True,
         label='Identifiant du membre',
         initial=0,
         widget=forms.TextInput(attrs={'id': 'member-id-borrow'})
@@ -107,19 +110,14 @@ class BorrowingMediaForm(forms.Form):
 
 class ReturnMediaForm(forms.Form):
     member_id = forms.IntegerField(
+        required=True,
         label='Identifiant du membre',
         initial=0,
         widget=forms.TextInput(attrs={'id': 'member-id-return'})
     )
     media_id = forms.ChoiceField(
+        required=True,
         choices = [],
         label='Identifiant du média',
         widget=forms.Select(attrs={'id': 'media-select-return'})
     )
-    '''
-    media_id = forms.IntegerField(
-        label='Identifiant du média',
-        initial=0,
-        widget=forms.TextInput(attrs={'id': 'media-id-return'})
-    )
-    '''

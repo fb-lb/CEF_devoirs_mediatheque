@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import JsonResponse
 from django.utils import timezone
 from zoneinfo import ZoneInfo
-from datetime import timedelta
+from datetime import timedelta, date
 from librarians_app.models import Book, Member
 from librarians_app.forms import CreateBook, DeleteBook, UpdateBook
 from librarians_app.forms import CreateMember, UpdateMember, DeleteMember
@@ -19,24 +20,51 @@ def createBook(request):
         book.name = create_book.cleaned_data['name']
         book.author = create_book.cleaned_data['author']
         book.save()
-        return redirect('media_management')
+        return redirect(reverse('media_management') + '?success=create_book#create-media-section')
+    else:
+        return render(request, 'mediaManagement.html', {
+            'create_book': create_book,
+            'delete_book': DeleteBook(),
+            'update_book': UpdateBook(),
+            'anchor': 'create-media-section'
+        })
 
 def deleteBook(request):
     delete_book = DeleteBook(request.POST)
     if delete_book.is_valid():
-        book = Book.objects.get(pk=delete_book.cleaned_data['id'])
-        book.delete()
-        return redirect('media_management')
+        try :
+            book = Book.objects.get(pk=delete_book.cleaned_data['id'])
+            book.delete()
+            return redirect(reverse('media_management') + '?success=delete_book#delete-media-section')
+        except Book.DoesNotExist:
+            return redirect(reverse('media_management') + '?error=delete_book#delete-media-section')
+    else:
+        return render(request, 'mediaManagement.html', {
+            'create_book': CreateBook(),
+            'delete_book': delete_book,
+            'update_book': UpdateBook(),
+            'anchor': 'delete-media-section'
+        })
 
 def updateBook(request):
     update_book = UpdateBook(request.POST)
     if update_book.is_valid():
-        id = update_book.cleaned_data['id']
-        book = Book.objects.get(pk=id)
-        book.name = update_book.cleaned_data['name']
-        book.author = update_book.cleaned_data['author']
-        book.save()
-        return redirect('media_management')
+        try:
+            id = update_book.cleaned_data['id']
+            book = Book.objects.get(pk=id)
+            book.name = update_book.cleaned_data['name']
+            book.author = update_book.cleaned_data['author']
+            book.save()
+            return redirect(reverse('media_management') + '?success=update_book#update-media-section')
+        except Book.DoesNotExist:
+            return redirect(reverse('media_management') + '?error=update_book#update-media-section')
+    else:
+        return render(request, 'mediaManagement.html', {
+            'create_book': CreateBook(),
+            'delete_book': DeleteBook(),
+            'update_book': update_book,
+            'anchor': 'update-media-section'
+        })
 
 def mediaManagement(request):
     if request.method == 'POST':
@@ -46,6 +74,8 @@ def mediaManagement(request):
             return deleteBook(request)
         elif 'submit_update_book' in request.POST:
             return updateBook(request)
+        else:
+            return redirect('media_management')
     else:
         return render(request, 'mediaManagement.html', {
             'create_book': CreateBook(),
@@ -55,8 +85,6 @@ def mediaManagement(request):
 
 def getBookDetails(request):
     book_id = request.GET.get('book_id')
-    #if not book_id:
-        #return JsonResponse({'error': 'ID du livre manquant.'})
     try:
         book = Book.objects.get(pk=book_id)
         data = {
@@ -71,51 +99,85 @@ def getBookDetails(request):
 View relative to membersManagement.html
 '''
 
-def createMember(request):
+def createMember(request, members):
     create_member = CreateMember(request.POST)
     if create_member.is_valid():
         member = Member()
         member.first_name = create_member.cleaned_data['first_name']
         member.last_name = create_member.cleaned_data['last_name']
         member.save()
-        return redirect('members_management')
+        return redirect(reverse('members_management') + '?success=create_member#create-member-section')
+    else:
+        return render(request, 'membersManagement.html', {
+            'members': members,
+            'create_member': create_member,
+            'update_member': UpdateMember(),
+            'delete_member': DeleteMember(),
+            'anchor': 'create-member-section'
+        })
 
-def updateMember(request):
+def updateMember(request, members):
     update_member = UpdateMember(request.POST)
     update_member.fields['is_blocked'].choices = [
         ('true', 'Oui'),
         ('false', 'Non')
     ]
     if update_member.is_valid():
-        id = update_member.cleaned_data['id']
-        member = Member.objects.get(pk=id)
-        member.first_name = update_member.cleaned_data['first_name']
-        member.last_name = update_member.cleaned_data['last_name']
-        is_blocked = update_member.cleaned_data['is_blocked']
-        if is_blocked == 'true':
-            member.is_blocked = True
-        elif is_blocked == 'false':
-            member.is_blocked = False
-        member.save()
-        return redirect('members_management')
+        try:
+            id = update_member.cleaned_data['id']
+            member = Member.objects.get(pk=id)
+            member.first_name = update_member.cleaned_data['first_name']
+            member.last_name = update_member.cleaned_data['last_name']
+            is_blocked = update_member.cleaned_data['is_blocked']
+            if is_blocked == 'true':
+                member.is_blocked = True
+            elif is_blocked == 'false':
+                member.is_blocked = False
+            member.save()
+            return redirect(reverse('members_management') + '?success=update_member#update-member-section')
+        except Member.DoesNotExist:
+            return redirect(reverse('members_management') + '?error=update_member#update-member-section')
+    else:
+        return render(request, 'membersManagement.html', {
+            'members': members,
+            'create_member': CreateMember(),
+            'update_member': update_member,
+            'delete_member': DeleteMember(),
+            'anchor': 'update-member-section'
+        })
 
-def deleteMember(request):
+def deleteMember(request, members):
     delete_member = DeleteMember(request.POST)
     if delete_member.is_valid():
-        id = delete_member.cleaned_data['id']
-        member = Member.objects.get(pk=id)
-        member.delete()
-        return redirect('members_management')
+        try:
+            id = delete_member.cleaned_data['id']
+            member = Member.objects.get(pk=id)
+            if member.nb_current_borrowings > 0:
+                return redirect(reverse('members_management') + '?no_delete=delete_member#delete-member-section')
+            else:
+                member.delete()
+                return redirect(reverse('members_management') + '?success=delete_member#delete-member-section')
+        except Member.DoesNotExist:
+            return redirect(reverse('members_management') + '?error=delete_member#delete-member-section')
+    else:
+        return render(request, 'memberManagement.html', {
+            'members': members,
+            'create_member': CreateMember(),
+            'update_member': UpdateMember(),
+            'delete_member': delete_member,
+            'anchor': 'delete-member-section'
+        })
+
 
 def membersManagement(request):
     members = Member.objects.all()
     if request.method == 'POST':
         if 'submit_create_member' in request.POST:
-            return createMember(request)
+            return createMember(request, members)
         elif 'submit_update_member' in request.POST:
-            return updateMember(request)
+            return updateMember(request, members)
         elif 'submit_delete_member' in request.POST:
-            return deleteMember(request)
+            return deleteMember(request, members)
     else:
         return render(request, 'membersManagement.html', {
             'members': members,
@@ -126,14 +188,13 @@ def membersManagement(request):
 
 def getMemberDetails(request):
     member_id = request.GET.get("member_id")
-    #if not (member_id):
-        #return JsonResponse({'error': 'Membre introuvable'})
     try:
         member = Member.objects.get(pk=member_id)
         data = {
             'last_name': member.last_name,
             'first_name': member.first_name,
-            'is_blocked': member.is_blocked
+            'is_blocked': member.is_blocked,
+            'nb_current_borrowings' : member.nb_current_borrowings
         }
     except Member.DoesNotExist:
         data = {'error': 'Cet identifiant ne correspond à aucun membre'}
@@ -143,65 +204,116 @@ def getMemberDetails(request):
 View relative to borrowings.html
 '''
 
+def isMemberBlocked(member):
+    is_blocked = False
+    today = date.today()
+    borrowed_books = Book.objects.filter(borrower=member, is_available=False)
+    for book in borrowed_books:
+        if book.return_date < today:
+            is_blocked = True
+    member.is_blocked = is_blocked
+    member.save()
+
 def returnDate(borrowing_date):
     return_day = borrowing_date + timedelta(days=7)
     return_date_time = return_day.replace(hour=23, minute=00)
     return return_date_time
 
-def newBorrowing(request):
+def newBorrowing(request, books_borrowed):
     new_borrowing = BorrowingMediaForm(request.POST)
     if new_borrowing.is_valid():
         media_type = new_borrowing.cleaned_data['media_type']
         media_id = new_borrowing.cleaned_data['media_id']
         member_id = new_borrowing.cleaned_data['member_id']
+        try:
+            member = Member.objects.get(pk=member_id)
+        except Member.DoesNotExist:
+            return redirect(reverse('borrowings') + '?error_member=borrowing_media#borrowing-media-section')
+        isMemberBlocked(member)
         member = Member.objects.get(pk=member_id)
+        if member.is_blocked == True:
+            return redirect(reverse('borrowings') + '?error_blocked=borrowing_media#borrowing-media-section')
+        if member.nb_current_borrowings >= 3:
+            return redirect(reverse('borrowings') + '?error_too_much_borrowings=borrowing_media#borrowing-media-section')
         if media_type == 'book' :
-            book = Book.objects.get(pk=media_id)
-            book.borrowing_date = timezone.now().astimezone(ZoneInfo("Europe/Paris"))
-            book.return_date = returnDate(timezone.now().astimezone(ZoneInfo("Europe/Paris")))
-            book.is_available = False
-            book.borrower = member
-            member.nb_current_borrowings += 1
-            member.save()
-            book.save()
-    return redirect('borrowings')
+            try:
+                book = Book.objects.get(pk=media_id)
+                if book.is_available==False:
+                    return redirect(reverse('borrowings') + '?error_not_available=borrowing_media#borrowing-media-section')
+                book.borrowing_date = timezone.now().astimezone(ZoneInfo("Europe/Paris"))
+                book.return_date = returnDate(timezone.now().astimezone(ZoneInfo("Europe/Paris")))
+                book.is_available = False
+                book.borrower = member
+                member.nb_current_borrowings += 1
+                member.save()
+                book.save()
+                return redirect(reverse('borrowings') + '?success=borrowing_media#borrowing-media-section')
+            except Book.DoesNotExist:
+                return redirect(reverse('borrowings') + '?error_book=borrowing_media#borrowing-media-section')
+    else:
+        return render(request, 'borrowings.html', {
+            'books_borrowed': books_borrowed,
+            'borrowing_media_form': new_borrowing,
+            'return_media_form': ReturnMediaForm(),
+            'anchor' : 'borrowing-media-section'
+        })
 
-def returnMedia(media):
+def returnedMedia(media):
     media.borrowing_date = None
     media.return_date = None
     media.is_available = True
     media.borrower = None
     media.save()
 
-def returnBorrowing(request):
+def returnBorrowing(request, books_borrowed):
     return_borrowing = ReturnMediaForm(request.POST)
     member_id = request.POST.get('member_id')
-    member = Member.objects.get(pk=member_id)
+    if not member_id:
+        return render(request, 'borrowings.html', {
+            'books_borrowed': books_borrowed,
+            'borrowing_media_form': BorrowingMediaForm(),
+            'return_media_form': return_borrowing,
+            'anchor': 'return-media-section'
+        })
+    try:
+        member = Member.objects.get(pk=member_id)
+    except Member.DoesNotExist:
+        return redirect(reverse('borrowings') + '?error_member=return_media#return-media-section')
     borrowed_books = Book.objects.filter(borrower=member, is_available=False)
     return_borrowing.fields['media_id'].choices = [
         (book.pk, book.name) for book in borrowed_books
     ]
     if return_borrowing.is_valid():
         member.nb_current_borrowings -= 1
-        member.save()
         media_id = return_borrowing.cleaned_data['media_id']
         media_type = request.POST.get('media_type_return')
         if media_type == 'livre':
-            media = Book.objects.get(pk=media_id)
-            returnMedia(media)
-    return redirect('borrowings')
+            try:
+                media = Book.objects.get(pk=media_id)
+                returnedMedia(media)
+                member.save()
+                isMemberBlocked(member)
+                return redirect(reverse('borrowings') + '?success=return_media#return-media-section')
+            except Book.DoesNotExist:
+                return redirect(reverse('borrowings') + '?error_book=return_media#return-media-section')
+    else:
+        return render(request, 'borrowings.html', {
+            'books_borrowed':books_borrowed,
+            'borrowing_media_form':BorrowingMediaForm(),
+            'return_media_form': return_borrowing,
+            'anchor': 'return-media-section'
+    })
 
 def borrowings(request):
-    borrowing_media_form = BorrowingMediaForm()
     books_borrowed = Book.objects.filter(is_available=False)
     if request.method == 'POST':
         if 'submit_borrowing' in request.POST:
-            return newBorrowing(request)
+            return newBorrowing(request, books_borrowed)
         elif 'submit_return' in request.POST:
-            return returnBorrowing(request)
+            return returnBorrowing(request, books_borrowed)
     return render(request, 'borrowings.html', {
         'books_borrowed':books_borrowed,
-        'borrowing_media_form':borrowing_media_form,
+        'borrowing_media_form':BorrowingMediaForm(),
         'return_media_form': ReturnMediaForm()
     })
 
@@ -242,9 +354,11 @@ def getBorrowedMedia(request):
             'id': book.pk,
             'type': book.media_type,
             'name': book.name,
-            'author': book.author
+            'author': book.author,
+            'borrowing_date': book.borrowing_date,
+            'return_date': book.return_date
         })
-    if media_data == []:
+    if not media_data:
         return JsonResponse({
             'empty': "Aucun emprunt n'est enregistré au nom de ce membre",
             'member_data': member_data
@@ -254,5 +368,3 @@ def getBorrowedMedia(request):
             'media_choices': media_data,
             'member_data': member_data
     })
-
-
