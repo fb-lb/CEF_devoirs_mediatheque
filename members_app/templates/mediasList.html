@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block medias_list %}
+<main>
+    <h1>Liste des médias de la médiathèque</h1>
+    <label for="media-search-bar">Rechercher</label>
+    <input type="text" name="media_search_bar" id="media-search-bar">
+    <label for="media-filter">Filtrer les médias selon leur type</label>
+    <select name="media_filter" id="media-filter">
+        <option value="all">Tous les médias</option>
+        <option value="book">Les livres</option>
+        <option value="cd">Les CD</option>
+        <option value="dvd">Les DVD</option>
+        <option value="parlour_game">Les jeux de société</option>
+    </select>
+    <table>
+        <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Type</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Disponible</th>
+                <th>Date maximale du retour</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr class="book">
+                <td>{{ book.pk }}</td>
+                <td>{{ book.media_type }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author }}</td>
+                <td>{% if book.is_available %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if not book.is_available %}{{ book.return_date }}{% else %}{% endif %}</td>
+            </tr>
+            {% endfor %}
+            {% for cd in cds %}
+            <tr class="cd">
+                <td>{{ cd.pk }}</td>
+                <td>{{ cd.media_type }}</td>
+                <td>{{ cd.name }}</td>
+                <td>{{ cd.artist }}</td>
+                <td>{% if cd.is_available %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if not cd.is_available %}{{ cd.return_date }}{% else %}{% endif %}</td>
+            </tr>
+            {% endfor %}
+            {% for dvd in dvds %}
+            <tr class="dvd">
+                <td>{{ dvd.pk }}</td>
+                <td>{{ dvd.media_type }}</td>
+                <td>{{ dvd.name }}</td>
+                <td>{{ dvd.director }}</td>
+                <td>{% if dvd.is_available %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if not dvd.is_available %}{{ dvd.return_date }}{% else %}{% endif %}</td>
+            </tr>
+            {% endfor %}
+            {% for parlour_game in parlour_games %}
+            <tr class="parlour_game">
+                <td>{{ parlour_game.pk }}</td>
+                <td>{{ parlour_game.media_type }}</td>
+                <td>{{ parlour_game.name }}</td>
+                <td>{{ parlour_game.creator }}</td>
+                <td>Non empruntable</td>
+                <td>Non concerné</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}
+
+{% block script_medias_list %}
+<script src="{% static 'js/medias_list.js' %}" defer></script>
+{% endblock %}

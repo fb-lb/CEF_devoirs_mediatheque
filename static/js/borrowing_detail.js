@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const mediaType = mediaChoiceBorrow.value
 
         if (mediaId) {
-            fetch(`/bibliothecaire/get-media-details/?media_id=${mediaId}&media_type=${mediaType}`)
+            fetch(`/bibliothecaire/get-media-details-borrowing/?media_id=${mediaId}&media_type=${mediaType}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             today_date = new Date().toISOString().split('T')[0]
                             if (media.return_date < today_date) {
                                 late_paragraph = document.createElement('p')
-                                late_text = document.createTextNode('En retard pour le retour de cet emprunt')
+                                late_text = document.createTextNode("En retard pour le retour de l'emprunt : " + media.id + " - " + media.name + " par " + media.author + " (" + media.type + ")")
                                 late_paragraph.appendChild(late_text)
                                 late_paragraph.setAttribute('style','color:red')
                                 memberInfoReturn.appendChild(late_paragraph)
@@ -117,4 +117,24 @@ document.addEventListener("DOMContentLoaded", function() {
         mediaTypeSelected = this.options[this.selectedIndex]
         mediaTypeReturn.value = mediaTypeSelected.dataset.type
     })
+
+    // Add event listener on search bar input which filter each line by their content
+    const inputElement = document.getElementById('borrowing-search-bar');
+    let debounceTimeout;
+
+    inputElement.addEventListener("input", (event) => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+            const searchValue = event.target.value.toLowerCase();
+            const allTrElements = document.querySelectorAll('tr');
+            for (const tr of allTrElements) {
+                tr.classList.remove('hidden-search');
+                if (tr.classList.length == 0) {
+                    continue;
+                } else if (!tr.innerText.toLowerCase().includes(searchValue)) {
+                    tr.classList.add('hidden-search');
+                }
+            }
+        }, 500)
+    });
 });

@@ -1,6 +1,14 @@
 from django.shortcuts import render
-from librarians_app.models import Book
+from librarians_app.models import Book, Cd, Dvd, ParlourGame
 
-def books_list(request):
+def medias_list(request):
     books = Book.objects.all()
-    return render(request, 'booksList.html', {'books': books})
+    cds = Cd.objects.all()
+    dvds = Dvd.objects.all()
+    parlour_games = ParlourGame.objects.all()
+    return render(request, 'mediasList.html', {
+        'books': books,
+        'cds': cds,
+        'dvds': dvds,
+        'parlour_games': parlour_games
+    })

@@ -27,3 +27,37 @@ class Book(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+
+
+class Cd(models.Model):
+    media_type = models.fields.CharField(max_length=150, default='cd')
+    name = models.fields.CharField(max_length=150)
+    artist = models.fields.CharField(max_length=150)
+    borrowing_date = models.fields.DateField(null=True)
+    return_date = models.fields.DateField(null=True)
+    is_available = models.fields.BooleanField(default=True)
+    borrower = models.ForeignKey(
+        Member,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+
+class Dvd(models.Model):
+    media_type = models.fields.CharField(max_length=150, default='dvd')
+    name = models.fields.CharField(max_length=150)
+    director = models.fields.CharField(max_length=150)
+    borrowing_date = models.fields.DateField(null=True)
+    return_date = models.fields.DateField(null=True)
+    is_available = models.fields.BooleanField(default=True)
+    borrower = models.ForeignKey(
+        Member,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+
+class ParlourGame(models.Model):
+    media_type = models.fields.CharField(max_length=150, default='jeu de société')
+    name = models.fields.CharField(max_length=150)
+    creator = models.fields.CharField(max_length=150)

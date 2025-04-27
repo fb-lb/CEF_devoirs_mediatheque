@@ -8,7 +8,8 @@
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Notre livre, notre média, la médiathèque pour tous</title>
-    {% block script_book_detail %} {% endblock %}
+    {% block script_medias_list %} {% endblock %}
+    {% block script_media_detail %} {% endblock %}
     {% block script_member_detail %} {% endblock %}
     {% block script_borrowing_detail %} {% endblock %}
 </head>
@@ -16,7 +17,7 @@
     {% include 'header.html' %}
 
     {% block home_page %} {% endblock %}
-    {% block books_list %} {% endblock %}
+    {% block medias_list %} {% endblock %}
     {% block media_management %} {% endblock %}
     {% block members_management %} {% endblock %}
     {% block borrowings %} {% endblock %}

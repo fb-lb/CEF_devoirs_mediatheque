@@ -35,11 +35,20 @@
         {% if request.GET.error_too_much_borrowings == 'borrowing_media' %}
         <p style=color:red>Ce membre ne peut pas emprunter car il a déjà 3 emprunts à son nom</p>
         {% endif %}
+        {% if request.GET.error_media_type == 'borrowing_media' %}
+        <p style=color:red>Ce type de média n'existe pas dans notre base de données</p>
+        {% endif %}
         {% if request.GET.error_not_available == 'borrowing_media' %}
         <p style=color:red>Ce média est déjà emprunté par un autre membre pour le moment</p>
         {% endif %}
         {% if request.GET.error_book == 'borrowing_media' %}
         <p style=color:red>L'identifiant renseigné ne correspond à aucun livre enregistré</p>
+        {% endif %}
+        {% if request.GET.error_cd == 'borrowing_media' %}
+        <p style=color:red>L'identifiant renseigné ne correspond à aucun CD enregistré</p>
+        {% endif %}
+        {% if request.GET.error_dvd == 'borrowing_media' %}
+        <p style=color:red>L'identifiant renseigné ne correspond à aucun DVD enregistré</p>
         {% endif %}
     </section>
     <section id="return-media-section">
@@ -63,12 +72,23 @@
         {% if request.GET.error_member == 'return_media' %}
         <p style=color:red>L'identifiant renseigné ne correspond à aucun membre enregistré</p>
         {% endif %}
+        {% if request.GET.error_media_type == 'return_media' %}
+        <p style=color:red>Ce type de média n'existe pas dans notre base de données</p>
+        {% endif %}
         {% if request.GET.error_book == 'return_media' %}
         <p style=color:red>L'identifiant renseigné ne correspond à aucun livre enregistré</p>
+        {% endif %}
+        {% if request.GET.error_cd == 'return_media' %}
+        <p style=color:red>L'identifiant renseigné ne correspond à aucun CD enregistré</p>
+        {% endif %}
+        {% if request.GET.error_dvd == 'return_media' %}
+        <p style=color:red>L'identifiant renseigné ne correspond à aucun DVD enregistré</p>
         {% endif %}
     </section>
     <section>
         <h2>Liste des emprunts</h2>
+        <label for="borrowing-search-bar">Rechercher</label>
+        <input type="text" name="borrowing_search_bar" id="borrowing-search-bar">
         <table>
             <thead>
                 <tr>
@@ -83,7 +103,7 @@
             </thead>
             <tbody>
             {% for book in books_borrowed %}
-                <tr>
+                <tr class="borrowing">
                     <td>{{ book.media_type }}</td>
                     <td>{{ book.pk }}</td>
                     <td>{{ book.name }}</td>
@@ -92,10 +112,28 @@
                     <td>{{ book.return_date }}</td>
                     <td>{{ book.borrower.first_name }} {{ book.borrower.last_name }}</td>
                 </tr>
-            {% empty %}
-            <tr>
-                <td>Aucun emprunt pour le moment</td>
-            </tr>
+            {% endfor %}
+            {% for cd in cd_borrowed %}
+                <tr class="borrowing">
+                    <td>{{ cd.media_type }}</td>
+                    <td>{{ cd.pk }}</td>
+                    <td>{{ cd.name }}</td>
+                    <td>{{ cd.artist }}</td>
+                    <td>{{ cd.borrowing_date }}</td>
+                    <td>{{ cd.return_date }}</td>
+                    <td>{{ cd.borrower.first_name }} {{ cd.borrower.last_name }}</td>
+                </tr>
+            {% endfor %}
+            {% for dvd in dvd_borrowed %}
+                <tr class="borrowing">
+                    <td>{{ dvd.media_type }}</td>
+                    <td>{{ dvd.pk }}</td>
+                    <td>{{ dvd.name }}</td>
+                    <td>{{ dvd.director }}</td>
+                    <td>{{ dvd.borrowing_date }}</td>
+                    <td>{{ dvd.return_date }}</td>
+                    <td>{{ dvd.borrower.first_name }} {{ dvd.borrower.last_name }}</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
