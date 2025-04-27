@@ -3,36 +3,59 @@ from django import forms
 '''
 Books management forms
 '''
+CHOICES_MEDIA = [
+    ('book', 'Livre'),
+    ('cd', 'CD'),
+    ('dvd', 'DVD'),
+    ('parlour_game', 'Jeu de société')
+]
 
-
-class CreateBook(forms.Form):
+class CreateMedia(forms.Form):
+    media_type = forms.ChoiceField(
+        required=True,
+        choices=CHOICES_MEDIA,
+        label='Type du média',
+        widget=forms.Select(attrs={'id': 'media-type-create'})
+    )
     name = forms.CharField(required=True, label='Nom')
-    author = forms.CharField(required=True, label='Auteur')
+    author = forms.CharField(required=True, label='Auteur / Artiste / Réalisateur / Créateur')
 
 
-class DeleteBook(forms.Form):
+class DeleteMedia(forms.Form):
+    media_type = forms.ChoiceField(
+        required=True,
+        choices=CHOICES_MEDIA,
+        label='Type du média',
+        widget=forms.Select(attrs={'id': 'media-type-delete'})
+    )
     id = forms.IntegerField(
         required=True,
         label='Identifiant',
-        widget=forms.TextInput(attrs={'id': 'book-id-delete'})
+        widget=forms.TextInput(attrs={'id': 'media-id-delete'})
     )
 
 
-class UpdateBook(forms.Form):
+class UpdateMedia(forms.Form):
+    media_type = forms.ChoiceField(
+        required=True,
+        choices=CHOICES_MEDIA,
+        label='Type du média',
+        widget=forms.Select(attrs={'id': 'media-type-update'})
+    )
     id = forms.IntegerField(
         required=True,
         label='Identifiant',
-        widget=forms.TextInput(attrs={'id': 'book-id-update'})
+        widget=forms.TextInput(attrs={'id': 'media-id-update'})
     )
     name = forms.CharField(
         required=True,
         label='Nom',
-        widget=forms.TextInput(attrs={'id': 'book-name-update'})
+        widget=forms.TextInput(attrs={'id': 'media-name-update'})
     )
     author = forms.CharField(
         required=True,
-        label='Auteur',
-        widget=forms.TextInput(attrs={'id': 'book-author-update'})
+        label='Auteur / Artiste / Réalisateur / Créateur',
+        widget=forms.TextInput(attrs={'id': 'media-author-update'})
     )
 
 
@@ -82,7 +105,8 @@ Borrowings form
 
 CHOICES_BORROWING = [
     ('book', 'Livre'),
-    ('cd', 'CD')
+    ('cd', 'CD'),
+    ('dvd', 'DVD')
 ]
 
 

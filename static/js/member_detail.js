@@ -68,4 +68,24 @@ document.addEventListener("DOMContentLoaded", function() {
             memberInfo.innerHTML = "";
         }
     })
+
+    // Add event listener on search bar input which filter each line by their content
+    const inputElement = document.getElementById('member-search-bar');
+    let debounceTimeout;
+
+    inputElement.addEventListener("input", (event) => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+            const searchValue = event.target.value.toLowerCase();
+            const allTrElements = document.querySelectorAll('tr');
+            for (const tr of allTrElements) {
+                tr.classList.remove('hidden-search');
+                if (tr.classList.length == 0) {
+                    continue;
+                } else if (!tr.innerText.toLowerCase().includes(searchValue)) {
+                    tr.classList.add('hidden-search');
+                }
+            }
+        }, 500)
+    });
 })
