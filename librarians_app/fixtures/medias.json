@@ -1,0 +1,220 @@
+[
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 1,
+    "fields": {
+        "name": "Harry Potter 1",
+        "borrowing_date": "2025-04-15",
+        "return_date": "2025-04-22",
+        "is_available": false,
+        "borrower": 2
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 2,
+    "fields": {
+        "name": "Harry Potter 2",
+        "borrowing_date": null,
+        "return_date": null,
+        "is_available": true,
+        "borrower": null
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 3,
+    "fields": {
+        "name": "Harry Potter 3",
+        "borrowing_date": null,
+        "return_date": null,
+        "is_available": true,
+        "borrower": null
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 4,
+    "fields": {
+        "name": "Harry Potter 4",
+        "borrowing_date": null,
+        "return_date": null,
+        "is_available": true,
+        "borrower": null
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 5,
+    "fields": {
+        "name": "Le Seigneur des Anneaux 1",
+        "borrowing_date": "2025-04-27",
+        "return_date": "2025-05-04",
+        "is_available": false,
+        "borrower": 4
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 6,
+    "fields": {
+        "name": "Le Seigneur des Anneaux 2",
+        "borrowing_date": "2025-04-27",
+        "return_date": "2025-05-04",
+        "is_available": false,
+        "borrower": 4
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 7,
+    "fields": {
+        "name": "Le Seigneur des Anneaux 3",
+        "borrowing_date": null,
+        "return_date": null,
+        "is_available": true,
+        "borrower": null
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 8,
+    "fields": {
+        "name": "Nevermind",
+        "borrowing_date": "2025-04-27",
+        "return_date": "2025-05-04",
+        "is_available": false,
+        "borrower": 2
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 9,
+    "fields": {
+        "name": "Star Wars 1",
+        "borrowing_date": "2025-05-01",
+        "return_date": "2025-05-08",
+        "is_available": false,
+        "borrower": 4
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 10,
+    "fields": {
+        "name": "Star Wars 2",
+        "borrowing_date": null,
+        "return_date": null,
+        "is_available": true,
+        "borrower": null
+    }
+},
+{
+    "model": "librarians_app.borrowablemedia",
+    "pk": 11,
+    "fields": {
+        "name": "Star Wars 3",
+        "borrowing_date": null,
+        "return_date": null,
+        "is_available": true,
+        "borrower": null
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 1,
+    "fields": {
+        "media_type": "livre",
+        "author": "JK Rowling"
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 2,
+    "fields": {
+        "media_type": "livre",
+        "author": "JK Rowling"
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 3,
+    "fields": {
+        "media_type": "livre",
+        "author": "JK Rowling"
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 4,
+    "fields": {
+        "media_type": "livre",
+        "author": "JK Rowling"
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 5,
+    "fields": {
+        "media_type": "livre",
+        "author": "JRR Tolkien"
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 6,
+    "fields": {
+        "media_type": "livre",
+        "author": "JRR Tolkien"
+    }
+},
+{
+    "model": "librarians_app.book",
+    "pk": 7,
+    "fields": {
+        "media_type": "livre",
+        "author": "JRR Tolkien"
+    }
+},
+{
+    "model": "librarians_app.cd",
+    "pk": 8,
+    "fields": {
+        "media_type": "cd",
+        "artist": "Nirvana"
+    }
+},
+{
+    "model": "librarians_app.dvd",
+    "pk": 9,
+    "fields": {
+        "media_type": "dvd",
+        "director": "George Lucas"
+    }
+},
+{
+    "model": "librarians_app.dvd",
+    "pk": 10,
+    "fields": {
+        "media_type": "dvd",
+        "director": "George Lucas"
+    }
+},
+{
+    "model": "librarians_app.dvd",
+    "pk": 11,
+    "fields": {
+        "media_type": "dvd",
+        "director": "George Lucas"
+    }
+},
+{
+    "model": "librarians_app.parlourgame",
+    "pk": 1,
+    "fields": {
+        "media_type": "jeu de société",
+        "name": "Smile Life",
+        "creator": "Alexandre Seba"
+    }
+}
+]

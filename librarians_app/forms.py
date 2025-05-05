@@ -3,17 +3,22 @@ from django import forms
 '''
 Books management forms
 '''
-CHOICES_MEDIA = [
+CHOICES_MEDIA_FULL = [
     ('book', 'Livre'),
     ('cd', 'CD'),
     ('dvd', 'DVD'),
     ('parlour_game', 'Jeu de société')
 ]
 
+CHOICES_MEDIA_LIMITED = [
+    ('media', 'Livre / CD / DVD'),
+    ('parlour_game', 'Jeu de société')
+]
+
 class CreateMedia(forms.Form):
     media_type = forms.ChoiceField(
         required=True,
-        choices=CHOICES_MEDIA,
+        choices=CHOICES_MEDIA_FULL,
         label='Type du média',
         widget=forms.Select(attrs={'id': 'media-type-create'})
     )
@@ -24,7 +29,7 @@ class CreateMedia(forms.Form):
 class DeleteMedia(forms.Form):
     media_type = forms.ChoiceField(
         required=True,
-        choices=CHOICES_MEDIA,
+        choices=CHOICES_MEDIA_LIMITED,
         label='Type du média',
         widget=forms.Select(attrs={'id': 'media-type-delete'})
     )
@@ -38,7 +43,7 @@ class DeleteMedia(forms.Form):
 class UpdateMedia(forms.Form):
     media_type = forms.ChoiceField(
         required=True,
-        choices=CHOICES_MEDIA,
+        choices=CHOICES_MEDIA_LIMITED,
         label='Type du média',
         widget=forms.Select(attrs={'id': 'media-type-update'})
     )
@@ -103,21 +108,8 @@ class UpdateMember(forms.Form):
 Borrowings form
 '''
 
-CHOICES_BORROWING = [
-    ('book', 'Livre'),
-    ('cd', 'CD'),
-    ('dvd', 'DVD')
-]
-
 
 class BorrowingMediaForm(forms.Form):
-    media_type = forms.ChoiceField(
-        required=True,
-        choices=CHOICES_BORROWING,
-        initial='Livre',
-        label='Type du média',
-        widget=forms.Select(attrs={'id': 'media-type-borrow'})
-    )
     media_id = forms.IntegerField(
         required=True,
         label='Identifiant du média',

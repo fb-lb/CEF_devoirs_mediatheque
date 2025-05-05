@@ -30,14 +30,8 @@
         {% if request.GET.success == 'delete_media' %}
         <p style="color: green;">Média supprimé</p>
         {% endif %}
-        {% if request.GET.error == 'delete_book' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun livre</p>
-        {% endif %}
-        {% if request.GET.error == 'delete_cd' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun CD</p>
-        {% endif %}
-        {% if request.GET.error == 'delete_dvd' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun DVD</p>
+        {% if request.GET.error == 'delete_media' %}
+        <p style="color: red;">L'identifiant renseigné ne correspond à aucun livre, cd ou dvd</p>
         {% endif %}
         {% if request.GET.error == 'delete_parlour_game' %}
         <p style="color: red;">L'identifiant renseigné ne correspond à aucun jeu de société</p>
@@ -57,14 +51,8 @@
         {% if request.GET.success == 'update_media' %}
         <p style="color: green;">Les modifications apportées ont bien été enregistrées</p>
         {% endif %}
-        {% if request.GET.error == 'update_book' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun livre enregistré</p>
-        {% endif %}
-        {% if request.GET.error == 'update_cd' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun CD enregistré</p>
-        {% endif %}
-        {% if request.GET.error == 'update_dvd' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun DVD enregistré</p>
+        {% if request.GET.error == 'update_media' %}
+        <p style="color: red;">L'identifiant renseigné ne correspond à aucun livre, cd ou dvd enregistré</p>
         {% endif %}
         {% if request.GET.error == 'update_parlour_game' %}
         <p style="color: red;">L'identifiant renseigné ne correspond à aucun jeu de société enregistré</p>

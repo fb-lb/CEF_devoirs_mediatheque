@@ -26,6 +26,9 @@
       {% if request.GET.success == 'update_member' %}
       <p style="color:green">Les modifications apportées ont bien été enregistrées</p>
       {% endif %}
+      {% if request.GET.error_blocked == 'update_member' %}
+      <p style="color:red">Le membre correspondant possède un retard de retour d'emprunt pour au moins un média emprunté à son nom</p>
+      {% endif %}
       {% if request.GET.error == 'update_member' %}
       <p style="color:red">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
       {% endif %}
