@@ -26,34 +26,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for book in books %}
-            <tr class="book">
-                <td>{{ book.pk }}</td>
-                <td>{{ book.media_type }}</td>
-                <td>{{ book.name }}</td>
-                <td>{{ book.author }}</td>
-                <td>{% if book.is_available %}Oui{% else %}Non{% endif %}</td>
-                <td>{% if not book.is_available %}{{ book.return_date }}{% else %}{% endif %}</td>
-            </tr>
-            {% endfor %}
-            {% for cd in cds %}
-            <tr class="cd">
-                <td>{{ cd.pk }}</td>
-                <td>{{ cd.media_type }}</td>
-                <td>{{ cd.name }}</td>
-                <td>{{ cd.artist }}</td>
-                <td>{% if cd.is_available %}Oui{% else %}Non{% endif %}</td>
-                <td>{% if not cd.is_available %}{{ cd.return_date }}{% else %}{% endif %}</td>
-            </tr>
-            {% endfor %}
-            {% for dvd in dvds %}
-            <tr class="dvd">
-                <td>{{ dvd.pk }}</td>
-                <td>{{ dvd.media_type }}</td>
-                <td>{{ dvd.name }}</td>
-                <td>{{ dvd.director }}</td>
-                <td>{% if dvd.is_available %}Oui{% else %}Non{% endif %}</td>
-                <td>{% if not dvd.is_available %}{{ dvd.return_date }}{% else %}{% endif %}</td>
+            {% for media in medias %}
+            <tr class="media">
+                <td>{{ media.pk }}</td>
+                <td>{{ media.type }}</td>
+                <td>{{ media.name }}</td>
+                <td>{{ media.author }}</td>
+                <td>{% if media.is_available %}Oui{% else %}Non{% endif %}</td>
+                <td>{% if not media.is_available %}{{ media.return_date }}{% else %}{% endif %}</td>
             </tr>
             {% endfor %}
             {% for parlour_game in parlour_games %}

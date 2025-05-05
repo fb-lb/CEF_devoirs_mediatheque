@@ -2,14 +2,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add event listener on media_id field in BorrowingMediaForm form
     const mediaInputBorrow = document.getElementById("media-id-borrow");
     const mediaInfoBorrow = document.getElementById("media-info-borrow");
-    const mediaChoiceBorrow = document.getElementById("media-type-borrow")
 
     mediaInputBorrow.addEventListener("input", function() {
         const mediaId = this.value;
-        const mediaType = mediaChoiceBorrow.value
 
         if (mediaId) {
-            fetch(`/bibliothecaire/get-media-details-borrowing/?media_id=${mediaId}&media_type=${mediaType}`)
+            fetch(`/bibliothecaire/get-media-details-borrowing/?media_id=${mediaId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -62,8 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
     memberInputReturn = document.getElementById('member-id-return');
     memberInfoReturn = document.getElementById('member-info-return');
     mediaSelectReturn = document.getElementById('media-select-return');
-    mediaTypeReturn = document.getElementById('media-type-return')
-    noMediaReturn = document.getElementById('no-media-return')
+    noMediaReturn = document.getElementById('no-media-return');
 
     memberInputReturn.addEventListener('input', function() {
         memberId = this.value;
@@ -74,12 +71,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (data.error) {
                         memberInfoReturn.innerHTML = `<p>${data.error}</p>`;
                         mediaSelectReturn.innerHTML = ""
-                        mediaTypeReturn.value = ""
                     } else if (data.empty) {
                         memberInfoReturn.innerHTML = `<p>${data.member_data.name}</p>`
                         mediaSelectReturn.innerHTML = ""
                         noMediaReturn.innerHTML = `<p>${data.empty}</p>`
-                        mediaTypeReturn.value = ""
                     } else {
                         memberInfoReturn.innerHTML = `<p>${data.member_data.name}</p>`
                         noMediaReturn.innerHTML = "";
@@ -99,24 +94,15 @@ document.addEventListener("DOMContentLoaded", function() {
                                 memberInfoReturn.appendChild(late_paragraph)
                             }
                         })
-                        mediaTypeSelected = mediaSelectReturn.options[mediaSelectReturn.selectedIndex]
-                        mediaTypeReturn.value = mediaTypeSelected.dataset.type
-
                     }
                 })
         } else {
             memberInfoReturn.innerHTML = "";
             mediaSelectReturn.innerHTML = "";
-            mediaTypeReturn.value = ""
             noMediaReturn.innerHTML = "";
         }
     })
 
-    // Add event listener on media_id field in ReturnMediaForm form
-    mediaSelectReturn.addEventListener("change", function() {
-        mediaTypeSelected = this.options[this.selectedIndex]
-        mediaTypeReturn.value = mediaTypeSelected.dataset.type
-    })
 
     // Add event listener on search bar input which filter each line by their content
     const inputElement = document.getElementById('borrowing-search-bar');

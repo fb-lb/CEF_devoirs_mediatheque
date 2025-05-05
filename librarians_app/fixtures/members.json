@@ -1,0 +1,42 @@
+[
+{
+    "model": "librarians_app.member",
+    "pk": 1,
+    "fields": {
+        "first_name": "Paul",
+        "last_name": "Dupont",
+        "nb_current_borrowings": 0,
+        "is_blocked": false
+    }
+},
+{
+    "model": "librarians_app.member",
+    "pk": 2,
+    "fields": {
+        "first_name": "Jacques",
+        "last_name": "Dupont",
+        "nb_current_borrowings": 2,
+        "is_blocked": true
+    }
+},
+{
+    "model": "librarians_app.member",
+    "pk": 3,
+    "fields": {
+        "first_name": "John",
+        "last_name": "Smith",
+        "nb_current_borrowings": 0,
+        "is_blocked": false
+    }
+},
+{
+    "model": "librarians_app.member",
+    "pk": 4,
+    "fields": {
+        "first_name": "Johnny",
+        "last_name": "Smith",
+        "nb_current_borrowings": 3,
+        "is_blocked": true
+    }
+}
+]
