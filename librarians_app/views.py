@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import JsonResponse
 from datetime import timedelta, date
@@ -118,6 +119,7 @@ def update_media(request):
             'anchor': 'update-media-section'
         })
 
+@login_required
 def media_management(request):
     if request.method == 'POST':
         if 'submit_create_media' in request.POST:
@@ -250,6 +252,7 @@ def delete_member(request, members):
             'anchor': 'delete-member-section'
         })
 
+@login_required
 def members_management(request):
     members = Member.objects.all()
     if request.method == 'POST':
@@ -380,6 +383,7 @@ def return_borrowing(request, medias_borrowed):
             'anchor': 'return-media-section'
     })
 
+@login_required
 def borrowings(request):
     medias_borrowed = BorrowableMedia.objects.filter(is_available=False)
     for media in medias_borrowed:

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block login %}
+<main>
+    <h1>Connexion à l'espace bibliothécaire</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+        <button type="submit">Se connecter</button>
+    </form>
+    {% if form.errors %}
+    <p style="color: red;">Nom d'utilisateur ou mot de passe incorrect.</p>
+</main>
+{% endif %}
+{% endblock %}
