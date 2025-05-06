@@ -6,6 +6,7 @@
         <ul>
             <li><a href="/">Accueil</a></li>
             <li><a href="{% url 'medias_list' %}">Nos médias</a></li>
+            {% if user.is_authenticated %}
             <li>
                 <p>Bibliothécaires</p>
                 <ul>
@@ -13,6 +14,17 @@
                     <li><a href="{% url 'members_management' %}">Gestion des membres</a></li>
                     <li><a href="{% url 'borrowings' %}">Emprunts</a></li>
                 </ul>
+            </li>
+            {% endif %}
+            <li>
+            {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Déconnexion</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}">Connexion</a>
+            {% endif %}
             </li>
         </ul>
     </nav>
