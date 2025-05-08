@@ -9,10 +9,10 @@
     <label for="media-filter">Filtrer les médias selon leur type</label>
     <select name="media_filter" id="media-filter">
         <option value="all">Tous les médias</option>
-        <option value="book">Les livres</option>
+        <option value="livre">Les livres</option>
         <option value="cd">Les CD</option>
         <option value="dvd">Les DVD</option>
-        <option value="parlour_game">Les jeux de société</option>
+        <option value="jeu-de-societe">Les jeux de société</option>
     </select>
     <table>
         <thead>
@@ -27,7 +27,7 @@
         </thead>
         <tbody>
             {% for media in medias %}
-            <tr class="media">
+            <tr class="{{ media.type|slugify }}">
                 <td>{{ media.pk }}</td>
                 <td>{{ media.type }}</td>
                 <td>{{ media.name }}</td>
@@ -37,7 +37,7 @@
             </tr>
             {% endfor %}
             {% for parlour_game in parlour_games %}
-            <tr class="parlour_game">
+            <tr class="{{ parlour_game.media_type|slugify }}">
                 <td>{{ parlour_game.pk }}</td>
                 <td>{{ parlour_game.media_type }}</td>
                 <td>{{ parlour_game.name }}</td>

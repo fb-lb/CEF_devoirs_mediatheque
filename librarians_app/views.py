@@ -141,7 +141,7 @@ def get_media_details_management(request):
     media_id = request.GET.get('media_id')
     media_type = request.GET.get('media_type')
 
-    if media_type == 'book' or media_type == 'cd' or media_type == 'dvd':
+    if media_type == 'media':
         try:
             media = BorrowableMedia.objects.get(pk=media_id)
             data = {'title': media.name}

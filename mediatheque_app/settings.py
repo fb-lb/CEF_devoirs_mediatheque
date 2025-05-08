@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 
@@ -131,11 +132,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static/']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Redirection after loggin in
+# URL relative to loggin in
 
+LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = '/'
 
 # Session management
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 1800
+SESSION_COOKIE_AGE = 3600
