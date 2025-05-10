@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        mediaInfoBorrow.innerHTML = `<p style="color:red;">${data.error}</p>`;
+                        mediaInfoBorrow.innerHTML = `<p class="error">${data.error}</p>`;
                     } else {
                         mediaInfoBorrow.innerHTML = `<p>${data.title} par ${data.author}</p>`;
                     }
@@ -32,21 +32,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error){
-                        memberInfoBorrow.innerHTML = `<p style="color:red;">${data.error}</p>`;
+                        memberInfoBorrow.innerHTML = `<p class="error">${data.error}</p>`;
                    } else {
                         memberInfoBorrow.innerHTML = `<p>${data.first_name} ${data.last_name}</p>`;
                         if (data.is_blocked == true) {
-                            blockedParagraph = document.createElement('p')
-                            blockedTextNode = document.createTextNode("Ce membre ne peut pas emprunter car il est interdit d'emprunt (il est en retard sur un emprunt à son nom)")
-                            blockedParagraph.appendChild(blockedTextNode)
-                            blockedParagraph.setAttribute('style','color:red')
-                            memberInfoBorrow.appendChild(blockedParagraph)
+                            blockedParagraph = document.createElement('p');
+                            blockedTextNode = document.createTextNode("Ce membre ne peut pas emprunter car il est interdit d'emprunt (il est en retard sur un emprunt à son nom)");
+                            blockedParagraph.appendChild(blockedTextNode);
+                            blockedParagraph.classList.add('error');
+                            memberInfoBorrow.appendChild(blockedParagraph);
                         } else if (data.nb_current_borrowings >= 3) {
-                            tooMuchParagraph = document.createElement('p')
-                            tooMuchTextNode = document.createTextNode("Ce membre ne peut pas emprunter car il a déjà 3 emprunts enregistrés à son nom")
-                            tooMuchParagraph.appendChild(tooMuchTextNode)
-                            tooMuchParagraph.setAttribute('style','color:red')
-                            memberInfoBorrow.appendChild(tooMuchParagraph)
+                            tooMuchParagraph = document.createElement('p');
+                            tooMuchTextNode = document.createTextNode("Ce membre ne peut pas emprunter car il a déjà 3 emprunts enregistrés à son nom");
+                            tooMuchParagraph.appendChild(tooMuchTextNode);
+                            tooMuchParagraph.classList.add('error');
+                            memberInfoBorrow.appendChild(tooMuchParagraph);
                         }
                     }
                 })
@@ -69,29 +69,29 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        memberInfoReturn.innerHTML = `<p>${data.error}</p>`;
-                        mediaSelectReturn.innerHTML = ""
+                        memberInfoReturn.innerHTML = `<p class='error'>${data.error}</p>`;
+                        mediaSelectReturn.innerHTML = "";
                     } else if (data.empty) {
-                        memberInfoReturn.innerHTML = `<p>${data.member_data.name}</p>`
-                        mediaSelectReturn.innerHTML = ""
-                        noMediaReturn.innerHTML = `<p>${data.empty}</p>`
+                        memberInfoReturn.innerHTML = `<p>${data.member_data.name}</p>`;
+                        mediaSelectReturn.innerHTML = "";
+                        noMediaReturn.innerHTML = `<p>${data.empty}</p>`;
                     } else {
-                        memberInfoReturn.innerHTML = `<p>${data.member_data.name}</p>`
+                        memberInfoReturn.innerHTML = `<p>${data.member_data.name}</p>`;
                         noMediaReturn.innerHTML = "";
                         mediaSelectReturn.innerHTML = "";
                         data.media_choices.forEach(media => {
                             const option = document.createElement('option');
                             option.value = media.id;
-                            option.dataset.type = media.type
+                            option.dataset.type = media.type;
                             option.textContent = media.id + ' - ' + media.name + ' par ' + media.author + ' (' + media.type + ')';
                             mediaSelectReturn.appendChild(option);
-                            today_date = new Date().toISOString().split('T')[0]
+                            today_date = new Date().toISOString().split('T')[0];
                             if (media.return_date < today_date) {
-                                late_paragraph = document.createElement('p')
-                                late_text = document.createTextNode("En retard pour le retour de l'emprunt : " + media.id + " - " + media.name + " par " + media.author + " (" + media.type + ")")
-                                late_paragraph.appendChild(late_text)
-                                late_paragraph.setAttribute('style','color:red')
-                                memberInfoReturn.appendChild(late_paragraph)
+                                late_paragraph = document.createElement('p');
+                                late_text = document.createTextNode("En retard pour le retour de l'emprunt : " + media.id + " - " + media.name + " par " + media.author + " (" + media.type + ")");
+                                late_paragraph.appendChild(late_text);
+                                late_paragraph.classList.add('error');
+                                memberInfoReturn.appendChild(late_paragraph);
                             }
                         })
                     }

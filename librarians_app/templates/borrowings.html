@@ -21,25 +21,25 @@
             <input type="submit" name="submit_borrowing" value="Enregistrer l'emprunt">
         </form>
         {% if request.GET.success == 'borrowing_media' %}
-        <p style=color:green>Emprunt bien enregistré</p>
+        <p class="success">Emprunt bien enregistré</p>
         {% endif %}
         {% if request.GET.error_member == 'borrowing_media' %}
-        <p style=color:red>L'identifiant renseigné ne correspond à aucun membre enregistré</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
         {% endif %}
         {% if request.GET.error_blocked == 'borrowing_media' %}
-        <p style=color:red>Ce membre ne peut pas emprunter car il est interdit d'emprunt (il est en retard sur un emprunt à son nom)</p>
+        <p class="error">Ce membre ne peut pas emprunter car il est interdit d'emprunt (il est en retard sur un emprunt à son nom)</p>
         {% endif %}
         {% if request.GET.error_too_much_borrowings == 'borrowing_media' %}
-        <p style=color:red>Ce membre ne peut pas emprunter car il a déjà 3 emprunts à son nom</p>
+        <p class="error">Ce membre ne peut pas emprunter car il a déjà 3 emprunts à son nom</p>
         {% endif %}
         {% if request.GET.error_media_type == 'borrowing_media' %}
-        <p style=color:red>Ce type de média n'existe pas dans notre base de données</p>
+        <p class="error">Ce type de média n'existe pas dans notre base de données</p>
         {% endif %}
         {% if request.GET.error_not_available == 'borrowing_media' %}
-        <p style=color:red>Ce média est déjà emprunté par un autre membre pour le moment</p>
+        <p class="error">Ce média est déjà emprunté par un autre membre pour le moment</p>
         {% endif %}
         {% if request.GET.error_media == 'borrowing_media' %}
-        <p style=color:red>L'identifiant renseigné ne correspond à aucun média enregistré</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun média enregistré</p>
         {% endif %}
     </section>
     <section id="return-media-section">
@@ -57,16 +57,16 @@
             <input type="submit" name="submit_return" value="Enregistrer le retour">
         </form>
         {% if request.GET.success == 'return_media' %}
-        <p style=color:green>Retour bien enregistré</p>
+        <p class="success">Retour bien enregistré</p>
         {% endif %}
         {% if request.GET.error_member == 'return_media' %}
-        <p style=color:red>L'identifiant renseigné ne correspond à aucun membre enregistré</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
         {% endif %}
         {% if request.GET.error_media_type == 'return_media' %}
-        <p style=color:red>Ce type de média n'existe pas dans notre base de données</p>
+        <p class="error">Ce type de média n'existe pas dans notre base de données</p>
         {% endif %}
         {% if request.GET.error_media == 'return_media' %}
-        <p style=color:red>L'identifiant renseigné ne correspond à aucun média enregistré</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun média enregistré</p>
         {% endif %}
     </section>
     <section>

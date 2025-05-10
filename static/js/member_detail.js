@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        memberError.innerHTML = `<p style="color:red">${data.error}</p>`;
+                        memberError.innerHTML = `<p class='error'>${data.error}</p>`;
                         memberLastName.value = "";
                         memberFirstName.value = "";
-                        memberIsBlocked.innerHTML = ""
+                        memberIsBlocked.innerHTML = "";
                     } else {
                         memberLastName.value = data.last_name;
                         memberFirstName.value = data.first_name;
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
             memberError.innerHTML = "";
             memberLastName.value = "";
             memberFirstName.value = "";
-            memberIsBlocked.innerHTML = ""
+            memberIsBlocked.innerHTML = "";
         }
     })
 })
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        memberInfo.innerHTML = `<p style="color:red">${data.error}</p>`;
+                        memberInfo.innerHTML = `<p class='error'>${data.error}</p>`;
                     } else {
                         memberInfo.innerHTML = `<p>${data.last_name} ${data.first_name}</p>`;
                     }

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        mediaInfoDelete.innerHTML = `<p style="color:red;">${data.error}</p>`;
+                        mediaInfoDelete.innerHTML = `<p class='error'>${data.error}</p>`;
                     } else {
                         mediaInfoDelete.innerHTML = `<p>${data.title} par ${data.author}</p>`;
                     }
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        mediaInfoUpdate.innerHTML = `<p style="color:red;">${data.error}</p>`;
+                        mediaInfoUpdate.innerHTML = `<p class='error'>${data.error}</p>`;
                         mediaNameUpdate.value = "";
                         mediaAuthorUpdate.value = "";
                     } else {

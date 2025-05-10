@@ -16,7 +16,7 @@
         <button type="submit">Se connecter</button>
     </form>
     {% if form.errors %}
-    <p style="color: red;">Nom d'utilisateur ou mot de passe incorrect.</p>
+    <p class="error">Nom d'utilisateur ou mot de passe incorrect.</p>
+    {% endif %}
 </main>
-{% endif %}
 {% endblock %}

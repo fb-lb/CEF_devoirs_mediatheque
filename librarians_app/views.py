@@ -12,7 +12,7 @@ from librarians_app.forms import BorrowingMediaForm, ReturnMediaForm
 View relative to mediaManagement.html
 '''
 
-def create_media(request):
+def create_media(request, medias, parlour_games):
     create_media_request = CreateMedia(request.POST)
     if create_media_request.is_valid():
         media_type = create_media_request.cleaned_data['media_type']
@@ -47,10 +47,12 @@ def create_media(request):
             'create_media': create_media_request,
             'delete_media': DeleteMedia(),
             'update_media': UpdateMedia(),
+            'medias': medias,
+            'parlour_games': parlour_games,
             'anchor': 'create-media-section'
         })
 
-def delete_media(request):
+def delete_media(request, medias, parlour_games):
     delete_media_request = DeleteMedia(request.POST)
     if delete_media_request.is_valid():
         media_type = delete_media_request.cleaned_data['media_type']
@@ -75,10 +77,12 @@ def delete_media(request):
             'create_media': CreateMedia(),
             'delete_media': delete_media_request,
             'update_media': UpdateMedia(),
+            'medias': medias,
+            'parlour_games': parlour_games,
             'anchor': 'delete-media-section'
         })
 
-def update_media(request):
+def update_media(request, medias, parlour_games):
     update_media_request = UpdateMedia(request.POST)
     if update_media_request.is_valid():
         media_type = update_media_request.cleaned_data['media_type']
@@ -116,25 +120,44 @@ def update_media(request):
             'create_media': CreateMedia(),
             'delete_media': DeleteMedia(),
             'update_media': update_media_request,
+            'medias': medias,
+            'parlour_games': parlour_games,
             'anchor': 'update-media-section'
         })
 
 @login_required
 def media_management(request):
+    medias = BorrowableMedia.objects.all()
+    for media in medias:
+        if hasattr(media, 'book'):
+            media.type = media.book.media_type
+            media.author = media.book.author
+        elif hasattr(media, 'cd'):
+            media.type = media.cd.media_type
+            media.author = media.cd.artist
+        elif hasattr(media, 'dvd'):
+            media.type = media.dvd.media_type
+            media.author = media.dvd.director
+        else:
+            media.type = 'Type de média inconnu'
+            media.author = 'Média non reconnu'
+    parlour_games = ParlourGame.objects.all()
     if request.method == 'POST':
         if 'submit_create_media' in request.POST:
-            return create_media(request)
+            return create_media(request, medias, parlour_games)
         elif 'submit_delete_media' in request.POST:
-            return delete_media(request)
+            return delete_media(request, medias, parlour_games)
         elif 'submit_update_media' in request.POST:
-            return update_media(request)
+            return update_media(request, medias, parlour_games)
         else:
             return redirect('media_management')
     else:
         return render(request, 'mediaManagement.html', {
             'create_media': CreateMedia(),
             'delete_media': DeleteMedia(),
-            'update_media': UpdateMedia()
+            'update_media': UpdateMedia(),
+            'medias': medias,
+            'parlour_games': parlour_games
         })
 
 def get_media_details_management(request):
@@ -361,7 +384,6 @@ def return_borrowing(request, medias_borrowed):
     borrowed_medias = BorrowableMedia.objects.filter(borrower=member, is_available=False)
     return_borrowing_request.fields['media_id'].choices = [(media.pk, media.name) for media in borrowed_medias]
     if return_borrowing_request.is_valid():
-        member.nb_current_borrowings -= 1
         media_id = return_borrowing_request.cleaned_data['media_id']
         try:
             media = BorrowableMedia.objects.get(pk=media_id)
@@ -369,6 +391,7 @@ def return_borrowing(request, medias_borrowed):
             media.return_date = None
             media.is_available = True
             media.borrower = None
+            member.nb_current_borrowings -= 1
             media.save()
             member.save()
             is_member_blocked(member)

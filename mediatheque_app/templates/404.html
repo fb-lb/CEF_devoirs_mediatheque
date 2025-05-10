@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block page_not_found %}
+<h1>Oups cette page est introuvable</h1>
+<p>Revenez à la page d'accueil en cliquant <a href="{% url 'home_page' %}">ici</a></p>
+{% endblock %}

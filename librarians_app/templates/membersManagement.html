@@ -12,7 +12,7 @@
       <input type="submit" name="submit_create_member" value="Enregistrer">
     </form>
     {% if request.GET.success == 'create_member' %}
-    <p style="color:green">Le nouveau membre est bien enregistré</p>
+    <p class="success">Le nouveau membre est bien enregistré</p>
     {% endif %}
   </section>
   <section id="update-member-section">
@@ -24,13 +24,13 @@
           <input type="submit" name="submit_update_member" value="Modifier">
       </form>
       {% if request.GET.success == 'update_member' %}
-      <p style="color:green">Les modifications apportées ont bien été enregistrées</p>
+      <p class="success">Les modifications apportées ont bien été enregistrées</p>
       {% endif %}
       {% if request.GET.error_blocked == 'update_member' %}
-      <p style="color:red">Le membre correspondant possède un retard de retour d'emprunt pour au moins un média emprunté à son nom</p>
+      <p class="error">Le membre correspondant possède un retard de retour d'emprunt pour au moins un média emprunté à son nom</p>
       {% endif %}
       {% if request.GET.error == 'update_member' %}
-      <p style="color:red">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
+      <p class="error">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
       {% endif %}
   </section>
   <section id="delete-member-section">
@@ -42,13 +42,13 @@
           <input type="submit" name="submit_delete_member" value="Supprimer">
       </form>
       {% if request.GET.success == 'delete_member' %}
-      <p style="color:green">Le membre a bien été supprimé</p>
+      <p class="success">Le membre a bien été supprimé</p>
       {% endif %}
       {% if request.GET.error == 'delete_member' %}
-      <p style="color:red">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
+      <p class="error">L'identifiant renseigné ne correspond à aucun membre enregistré</p>
       {% endif %}
       {% if request.GET.no_delete == 'delete_member' %}
-      <p style="color:red">Ce membre ne peut pas être supprimé car il a des emprunts en cours</p>
+      <p class="error">Ce membre ne peut pas être supprimé car il a des emprunts en cours</p>
       {% endif %}
   </section>
   <section>

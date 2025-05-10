@@ -9,3 +9,11 @@ h1 {
 .hidden-search {
     display: none;
 }
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}

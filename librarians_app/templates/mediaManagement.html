@@ -12,10 +12,10 @@
             <input type="submit" name="submit_create_media" value="Enregistrer">
         </form>
         {% if request.GET.success == 'create_media' %}
-        <div style="color: green;">Nouveau média enregistré</div>
+        <div class="success">Nouveau média enregistré</div>
         {% endif %}
         {% if request.GET.error_media_type == 'create_media' %}
-        <div style="color: red;">Ce type de média n'existe pas dans notre base de données</div>
+        <div class="error">Ce type de média n'existe pas dans notre base de données</div>
         {% endif %}
     </section>
     <section id="delete-media-section">
@@ -28,16 +28,16 @@
             <input type="submit" name="submit_delete_media" value="Supprimer">
         </form>
         {% if request.GET.success == 'delete_media' %}
-        <p style="color: green;">Média supprimé</p>
+        <p class="success">Média supprimé</p>
         {% endif %}
         {% if request.GET.error == 'delete_media' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun livre, cd ou dvd</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun livre, cd ou dvd</p>
         {% endif %}
         {% if request.GET.error == 'delete_parlour_game' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun jeu de société</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun jeu de société</p>
         {% endif %}
         {% if request.GET.error == 'delete_media_type' %}
-        <div style="color: red;">Ce type de média n'existe pas dans notre base de données</div>
+        <div class="error">Ce type de média n'existe pas dans notre base de données</div>
         {% endif %}
     </section>
     <section id="update-media-section">
@@ -49,17 +49,64 @@
             <input type="submit" name="submit_update_media" value="Modifier">
         </form>
         {% if request.GET.success == 'update_media' %}
-        <p style="color: green;">Les modifications apportées ont bien été enregistrées</p>
+        <p class="success">Les modifications apportées ont bien été enregistrées</p>
         {% endif %}
         {% if request.GET.error == 'update_media' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun livre, cd ou dvd enregistré</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun livre, cd ou dvd enregistré</p>
         {% endif %}
         {% if request.GET.error == 'update_parlour_game' %}
-        <p style="color: red;">L'identifiant renseigné ne correspond à aucun jeu de société enregistré</p>
+        <p class="error">L'identifiant renseigné ne correspond à aucun jeu de société enregistré</p>
         {% endif %}
         {% if request.GET.error == 'update_media_type' %}
-        <div style="color: red;">Ce type de média n'existe pas dans notre base de données</div>
+        <p class="error">Ce type de média n'existe pas dans notre base de données</p>
         {% endif %}
+    </section>
+    <section>
+        <h2>Liste des médias de la médiathèque</h2>
+        <label for="media-search-bar">Rechercher</label>
+        <input type="text" name="media_search_bar" id="media-search-bar">
+        <label for="media-filter">Filtrer les médias selon leur type</label>
+        <select name="media_filter" id="media-filter">
+            <option value="all">Tous les médias</option>
+            <option value="livre">Les livres</option>
+            <option value="cd">Les CD</option>
+            <option value="dvd">Les DVD</option>
+            <option value="jeu-de-societe">Les jeux de société</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Identifiant</th>
+                    <th>Type</th>
+                    <th>Titre</th>
+                    <th>Auteur / Réalisateur / Artiste / Créateur</th>
+                    <th>Disponible</th>
+                    <th>Date maximale du retour</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for media in medias %}
+                <tr class="{{ media.type|slugify }}">
+                    <td>{{ media.pk }}</td>
+                    <td>{{ media.type }}</td>
+                    <td>{{ media.name }}</td>
+                    <td>{{ media.author }}</td>
+                    <td>{% if media.is_available %}Oui{% else %}Non{% endif %}</td>
+                    <td>{% if not media.is_available %}{{ media.return_date }}{% else %}{% endif %}</td>
+                </tr>
+                {% endfor %}
+                {% for parlour_game in parlour_games %}
+                <tr class="{{ parlour_game.media_type|slugify }}">
+                    <td>{{ parlour_game.pk }}</td>
+                    <td>{{ parlour_game.media_type }}</td>
+                    <td>{{ parlour_game.name }}</td>
+                    <td>{{ parlour_game.creator }}</td>
+                    <td>Non empruntable</td>
+                    <td>Non concerné</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </section>
 </main>
 {% if anchor %}
@@ -69,4 +116,5 @@
 
 {% block script_media_detail %}
 <script src="{% static 'js/media_detail.js' %}" defer></script>
+<script src="{% static 'js/medias_list.js' %}" defer></script>
 {% endblock %}
