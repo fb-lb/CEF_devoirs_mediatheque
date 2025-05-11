@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 from django.contrib.auth.models import User
 from librarians_app.models import Book, Member, Dvd
-from datetime import timedelta, date
+from datetime import timedelta
 
 
 @pytest.mark.django_db
@@ -11,7 +11,7 @@ def test_login_view(client):
     url = reverse('login')
     response = client.get(url)
     assert response.status_code == 200
-    assert b"Connexion" in response.content
+    assert b"Connexion" and b"Nom d'utilisateur" and b"Mot de passe" in response.content
 
     # Test of connexion with valid username and password
     user = User.objects.create_user(username='testunsername', password='testpassword')
@@ -187,6 +187,10 @@ def test_new_borrowing(client):
     assert "Ce membre ne peut pas emprunter car il a déjà 3 emprunts à son nom" in response.content.decode()
     assert dvd_no_borrowed.borrower is None
     assert dvd_no_borrowed.is_available == True
+
+    # Update member's number of borrowing at 1
+    member.nb_current_borrowings = 1
+    member.save()
 
     # Update return date to block member
     book_borrowed.return_date -= timedelta(days=8)
