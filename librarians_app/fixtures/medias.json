@@ -4,8 +4,8 @@
     "pk": 1,
     "fields": {
         "name": "Harry Potter 1",
-        "borrowing_date": "2025-04-15",
-        "return_date": "2025-04-22",
+        "borrowing_date": "2025-05-02",
+        "return_date": "2025-05-09",
         "is_available": false,
         "borrower": 2
     }
@@ -48,8 +48,8 @@
     "pk": 5,
     "fields": {
         "name": "Le Seigneur des Anneaux 1",
-        "borrowing_date": "2025-04-27",
-        "return_date": "2025-05-04",
+        "borrowing_date": "2025-05-09",
+        "return_date": "2025-05-16",
         "is_available": false,
         "borrower": 4
     }
@@ -59,8 +59,8 @@
     "pk": 6,
     "fields": {
         "name": "Le Seigneur des Anneaux 2",
-        "borrowing_date": "2025-04-27",
-        "return_date": "2025-05-04",
+        "borrowing_date": "2025-05-09",
+        "return_date": "2025-05-16",
         "is_available": false,
         "borrower": 4
     }
@@ -81,8 +81,8 @@
     "pk": 8,
     "fields": {
         "name": "Nevermind",
-        "borrowing_date": "2025-04-27",
-        "return_date": "2025-05-04",
+        "borrowing_date": "2025-05-08",
+        "return_date": "2025-05-15",
         "is_available": false,
         "borrower": 2
     }
@@ -92,8 +92,8 @@
     "pk": 9,
     "fields": {
         "name": "Star Wars 1",
-        "borrowing_date": "2025-05-01",
-        "return_date": "2025-05-08",
+        "borrowing_date": "2025-05-09",
+        "return_date": "2025-05-16",
         "is_available": false,
         "borrower": 4
     }

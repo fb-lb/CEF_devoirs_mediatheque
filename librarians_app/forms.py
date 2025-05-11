@@ -145,6 +145,6 @@ class ReturnMediaForm(forms.Form):
     media_id = forms.ChoiceField(
         required=True,
         choices = [],
-        label='Identifiant du média',
+        label='Média à retourner',
         widget=forms.Select(attrs={'id': 'media-select-return'})
     )
