@@ -93,10 +93,13 @@ def update_media(request, medias, parlour_games):
                 media.name = update_media_request.cleaned_data['name']
                 if hasattr(media, 'book'):
                     media.book.author = update_media_request.cleaned_data['author']
+                    media.book.save()
                 elif hasattr(media, 'cd'):
                     media.cd.artist = update_media_request.cleaned_data['author']
+                    media.cd.save()
                 elif hasattr(media, 'dvd'):
                     media.dvd.director = update_media_request.cleaned_data['author']
+                    media.dvd.save()
                 else:
                     return redirect(reverse('media_management') + '?error=update_media#update-media-section')
                 media.save()
