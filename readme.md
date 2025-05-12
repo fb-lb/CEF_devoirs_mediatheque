@@ -69,6 +69,7 @@ With Xampp interface, activate Apache and MySQL and go to [PHPMyAdmin](http://lo
 Be sure that MariaDB version is 10.5 or newer
 
 Create the database 'mediatheque' with utf8mb4_general_ci character set
+
 If you want to use another name, change the value of NAME property in DATABASE object in settings.py by the database name you want to use
 (Just in case, check that value of PORT property in this same DATABASE object is the same port that Xampp is using for MySQL or change it in DATABASE object)
 
