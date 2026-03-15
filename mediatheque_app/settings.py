@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'mediatheque_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mediatheque',
+        'NAME': os.environ.get('MYSQL_DATABASE'),
         'USER': os.environ.get('DJANGO_DB_USER'),
         'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': os.environ.get('DJANGO_DB_HOST'),
+        'PORT': os.environ.get('DJANGO_DB_PORT'),
         'OPTIONS': {
             'charset': 'utf8mb4',
         }
