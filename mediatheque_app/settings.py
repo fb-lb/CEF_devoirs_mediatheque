@@ -91,7 +91,7 @@ DATABASES = {
         'PORT': os.environ.get('DJANGO_DB_PORT'),
         'OPTIONS': {
             'charset': 'utf8mb4',
-            'ssl': {'ssl-mode': os.environ.get('DJANGO_SSL_MODE')},
+            'ssl': {'ssl_mode': os.environ.get('DJANGO_SSL_MODE')},
         }
     }
 }
