@@ -68,13 +68,11 @@ pip install -r requirements.txt
 With Xampp interface, activate Apache and MySQL and go to [PHPMyAdmin](http://localhost/phpmyadmin/)
 Be sure that MariaDB version is 10.5 or newer
 
-Create the database 'mediatheque' with utf8mb4_general_ci character set
-
-If you want to use another name, change the value of NAME property in DATABASE object in settings.py by the database name you want to use
-(Just in case, check that value of PORT property in this same DATABASE object is the same port that Xampp is using for MySQL or change it in DATABASE object)
+Create the database with utf8mb4_general_ci character set, keep the name of the database,
+you will need it for the next step.
 
 Then create a sql_user for this database. Keep the name of the sql_user and the password, you will need them in the next step
-Give all privileges to this user on the 'mediatheque' database you've just created
+Give all privileges to this user on the database you've just created
 
 5. **Environment variables**
 
@@ -84,9 +82,15 @@ Inside this file put :
 DJANGO_SECRET_KEY=your_secret_key
 DJANGO_DB_USER=sql_user
 DJANGO_DB_PASSWORD=your_mysql_password
+DJANGO_DB_HOST=your_database_host
+DJANGO_DB_PORT=your_database_port
+MYSQL_DATABASE=your_database_name
+DJANGO_SSL_MODE=your_database_connection_ssl_mode
 ```
+Values for DJANGO_SSL_MODE :  
+DISABLED | PREFERRED | REQUIRED | VERIFY_CA | VERIFY_IDENTITY
 
-To generate a valid Django secret key, run this in the terminal :
+To generate a valid Django secret key, run this command in the terminal :
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```

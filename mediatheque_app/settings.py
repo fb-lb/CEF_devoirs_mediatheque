@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'cef-devoirs-mediatheque.onrender.com']
 
 
 # Application definition
@@ -91,6 +91,7 @@ DATABASES = {
         'PORT': os.environ.get('DJANGO_DB_PORT'),
         'OPTIONS': {
             'charset': 'utf8mb4',
+            'ssl': {'ssl_mode': os.environ.get('DJANGO_SSL_MODE')},
         }
     }
 }

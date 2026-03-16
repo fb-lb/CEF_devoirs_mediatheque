@@ -7,8 +7,8 @@ Authentification forms
 
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label="Nom d'utilisateur", max_length=150)
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+    username = forms.CharField(label="Nom d'utilisateur", max_length=150, initial='Notre_livre_notre_media')
+    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(render_value=True), initial='librarian')
 
 
 '''
